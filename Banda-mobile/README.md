@@ -1,5 +1,4 @@
 BANDA-MOBILE REPO
 
-Yu jeong hyeop
-Lee jun su
-Ha dong hyun
+node - 16.16.0
+java - 11.0.12
