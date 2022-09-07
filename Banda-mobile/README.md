@@ -1,1 +1,4 @@
 BANDA-MOBILE REPO
+
+node - 16.16.0
+java - 11.0.12
