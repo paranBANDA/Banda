@@ -32,3 +32,32 @@
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <!-- 메인 -->
+
+
+
+    <!-- drawable/some_id.xml -->
+<vector
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:aapt="http://schemas.android.com/aapt"
+android:width="414dp"
+android:height="896dp"
+android:viewportWidth="414"
+android:viewportHeight="896"
+    >
+
+<group>
+
+    <clip-path
+        android:pathData="M30 0H384C400.569 0 414 13.4315 414 30V866C414 882.569 400.569 896 384 896H30C13.4315 896 0 882.569 0 866V30C0 13.4315 13.4315 0 30 0Z"
+        />
+
+    <path
+        android:pathData="M0 0V896H414V0"
+        android:fillColor="#FAFAFA"
+        />
+
+</group>
+
+</vector>
