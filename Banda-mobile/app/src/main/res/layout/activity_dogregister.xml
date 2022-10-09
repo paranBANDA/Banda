@@ -7,28 +7,6 @@
     tools:context=".Register.Dogregister">
 
     <Button
-        android:id="@+id/button3"
-        android:layout_width="192dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="30dp"
-        android:text="3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="192dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="30dp"
-        android:text="2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
-
-    <Button
         android:id="@+id/button2_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,17 +23,103 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:gravity="top"
-        android:text="강아지 등록"
+        android:text="반려견 등록"
         android:textAppearance="@style/banda" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="192dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="60dp"
-        android:text="1"
-        app:layout_constraintEnd_toEndOf="parent"
+    <EditText
+        android:id="@+id/editTextDogName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:hint="JUN"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/dogNameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/banda" />
+
+    <TextView
+        android:id="@+id/dogBreedTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="반려견 종류"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextDogBreed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/editTextDogBreed" />
+
+    <EditText
+        android:id="@+id/editTextDogBreed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="래브라도 리트리버"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/dogBreedTextView"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDogName" />
+
+    <TextView
+        android:id="@+id/dogNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:text="반려견 이름"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextDogName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/banda" />
+
+    <TextView
+        android:id="@+id/dogGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="성별"
+        app:layout_constraintBottom_toBottomOf="@+id/radioGroupDogGender"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/radioGroupDogGender" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupDogGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/dogGender"
+        app:layout_constraintStart_toEndOf="@+id/dogGender"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDogBreed">
+
+        <RadioButton
+            android:id="@+id/woman"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="여자" />
+
+        <RadioButton
+            android:id="@+id/man"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="남자" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/dogBirthdayDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupDogGender" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="생일"
+        app:layout_constraintBottom_toBottomOf="@+id/dogBirthdayDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/dogBirthdayDate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
