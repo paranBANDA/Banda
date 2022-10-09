@@ -4,9 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.example.banda.R
 import com.example.banda.RetrofitService
 import com.example.banda.data.Register
+import com.example.banda.data.RegisterGet
 import kotlinx.android.synthetic.main.activity_register.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,19 +28,25 @@ class RegisterActivity : AppCompatActivity() {
     btn_next.setOnClickListener {
         var id = editTextTextEmailAddress.text.toString()
         var pw = editTextTextPassword.text.toString()
-        Log.d(id,pw+"hello")
         val RegisterRequest = Register(email = id, pw = pw)
-        service.LocalRegister(RegisterRequest).enqueue(object : Callback<Register> {
-            override fun onResponse(call: Call<Register>, response: Response<Register>) {
+        service.EmailCheck(RegisterRequest).enqueue(object : Callback<RegisterGet> {
+            override fun onResponse(call: Call<RegisterGet>, response: Response<RegisterGet>) {
                 if (response.isSuccessful) {
-                    println("성공")
-                    intent = Intent(this@RegisterActivity, Registernickname::class.java)
-                    startActivity((intent))
+                    var sucessdata = response.body()
+                    if (sucessdata?.type == "true") {
+                        intent = Intent(this@RegisterActivity, Registernickname::class.java)
+                        intent.putExtra("email",id)
+                        intent.putExtra("pw",pw)
+                        startActivity((intent))
+                    }
+                    else{
+                        Toast.makeText(this@RegisterActivity, "이미 가입된 이메일 입니다.", Toast.LENGTH_SHORT).show()
+                    }
                 } else {
-                    println("실패")
+                        println("Failed")
                 }
             }
-            override fun onFailure(call: Call<Register>, t: Throwable) {
+            override fun onFailure(call: Call<RegisterGet>, t: Throwable) {
                 println("에러: " + t.message.toString());
             }
         })

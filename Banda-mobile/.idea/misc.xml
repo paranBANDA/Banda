@@ -6,11 +6,11 @@
         <entry key="app/src/main/res/drawable/frame_11.xml" value="0.26296296296296295" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.26296296296296295" />
         <entry key="app/src/main/res/font/font.xml" value="0.25833333333333336" />
-        <entry key="app/src/main/res/layout/activity_dogregister.xml" value="0.18802083333333333" />
+        <entry key="app/src/main/res/layout/activity_dogregister.xml" value="0.27153613924683645" />
         <entry key="app/src/main/res/layout/activity_familyfind.xml" value="0.32720651559605685" />
         <entry key="app/src/main/res/layout/activity_finalregister.xml" value="0.2977305551932229" />
-        <entry key="app/src/main/res/layout/activity_groupexist.xml" value="0.28011362560553316" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_groupexist.xml" value="0.2646968562961583" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.2118254970040278" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3841877280436216" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.23910271659272736" />
         <entry key="app/src/main/res/layout/activity_registernickname.xml" value="0.315047679406484" />
