@@ -12,7 +12,7 @@ interface RetrofitService {
     @POST("auth/register")
     fun LocalRegister(
         @Body register: Register
-    ):Call<Register>
+    ):Call<RegisterGet>
 
     @POST("auth/emailcheck")
     fun EmailCheck(

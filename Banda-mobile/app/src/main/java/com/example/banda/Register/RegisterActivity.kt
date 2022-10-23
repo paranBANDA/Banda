@@ -26,16 +26,16 @@ class RegisterActivity : AppCompatActivity() {
     val service = retrofit.create(RetrofitService::class.java)
 
     btn_next.setOnClickListener {
-        var id = editTextTextEmailAddress.text.toString()
+        var email = editTextTextEmailAddress.text.toString()
         var pw = editTextTextPassword.text.toString()
-        val RegisterRequest = Register(email = id, pw = pw)
+        val RegisterRequest = Register(email = email, pw = pw,nickname = email)
         service.EmailCheck(RegisterRequest).enqueue(object : Callback<RegisterGet> {
             override fun onResponse(call: Call<RegisterGet>, response: Response<RegisterGet>) {
                 if (response.isSuccessful) {
                     var sucessdata = response.body()
                     if (sucessdata?.type == "true") {
                         intent = Intent(this@RegisterActivity, Registernickname::class.java)
-                        intent.putExtra("email",id)
+                        intent.putExtra("email",email)
                         intent.putExtra("pw",pw)
                         startActivity((intent))
                     }

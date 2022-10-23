@@ -24,9 +24,9 @@ class LoginActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create()).build();
         val service = retrofit.create(RetrofitService::class.java)
         btn_login.setOnClickListener {
-            var id = edit_id.text.toString()
+            var email = edit_id.text.toString()
             var pw = edit_pw.text.toString()
-            val loginRequest = Login(email = id, password = pw)
+            val loginRequest = Login(email = email, pw = pw)
             service.LocalLogin(loginRequest).enqueue(object : Callback<LoginGet>{
                 override fun onResponse(call: Call<LoginGet>, response: Response<LoginGet>) {
                     if (response.isSuccessful) {

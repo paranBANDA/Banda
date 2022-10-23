@@ -31,13 +31,7 @@ class Dogregister : AppCompatActivity() {
         setContentView(R.layout.activity_dogregister)
         val secondintent = getIntent()
         val email = secondintent.getStringExtra("email")
-        val pw = secondintent.getStringExtra("pw")
-        val nickname = secondintent.getStringExtra("nickname")
-
         var dogGender = DOG_GENDER_WOMAN
-
-
-
         val retrofit = Retrofit.Builder().baseUrl("http://13.124.202.212:3000/")
             .addConverterFactory(GsonConverterFactory.create()).build();
         val service = retrofit.create(RetrofitService::class.java)
@@ -98,7 +92,6 @@ class Dogregister : AppCompatActivity() {
                                 if (response.isSuccessful) {
                                     var sucessdata = response.body()
                                     if (sucessdata?.type == "true") {
-                                        val familyId = sucessdata.data
                                         intent = Intent(this@Dogregister, Finalregister::class.java)
                                         startActivity((intent))
                                     }
