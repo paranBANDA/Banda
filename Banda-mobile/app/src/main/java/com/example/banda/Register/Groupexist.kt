@@ -19,10 +19,16 @@ class Groupexist : AppCompatActivity() {
         Log.e("tag", "메인에서 받아온 id : $email, pw : $pw nickname: $nickname")
         button_yes.setOnClickListener {
             intent = Intent(this@Groupexist, Familyfind::class.java)
+            intent.putExtra("email",email)
+            intent.putExtra("pw",pw)
+            intent.putExtra("nickname",nickname)
             startActivity((intent))
         }
         button_no.setOnClickListener {
             intent = Intent(this@Groupexist, Dogregister::class.java)
+            intent.putExtra("email",email)
+            intent.putExtra("pw",pw)
+            intent.putExtra("nickname",nickname)
             startActivity((intent))
         }
     }
