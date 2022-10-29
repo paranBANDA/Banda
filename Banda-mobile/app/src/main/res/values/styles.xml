@@ -11,4 +11,26 @@
         </item>
 
     </style>
+    <style name="content_main">
+        <item name="android:textSize">
+            24sp
+        </item>
+        <item name="android:textColor">
+            #474747
+        </item>
+        <item name="android:textStyle">
+            bold
+        </item>
+    </style>
+    <style name="content_sub">
+        <item name="android:textSize">
+            18sp
+        </item>
+        <item name="android:textColor">
+            #878787
+        </item>
+        <item name="android:textStyle">
+            bold
+        </item>
+    </style>
 </resources>

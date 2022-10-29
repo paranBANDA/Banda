@@ -8,48 +8,53 @@
 
     <EditText
         android:id="@+id/editTextTextEmailAddress"
-        android:layout_width="308dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="200dp"
+        android:layout_width="360dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="180dp"
         android:ems="10"
         android:hint="이메일을 입력해주세요"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="203dp"
-        android:layout_height="65dp"
-        android:layout_marginEnd="110dp"
-        android:text="회원 가입"
-        android:textColor="#FFC11A"
-        android:textSize="48sp"
-        android:fontFamily="@font/suit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이메일과 비밀번호를 입력해주세요"
+        android:textAppearance="@style/content_main"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTextEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.388"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="40dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.506" />
 
     <EditText
         android:id="@+id/editTextTextPassword"
-        android:layout_width="307dp"
-        android:layout_height="66dp"
+        android:layout_width="360dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="비밀번호를 입력해주세요"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress" />
 
     <Button
         android:id="@+id/btn_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_width="366dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="340dp"
+        android:background="@color/banda"
         android:text="다음"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 
