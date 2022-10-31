@@ -10,6 +10,7 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import android.app.DatePickerDialog
 import com.example.banda.R
 import com.example.banda.RetrofitService
 import com.example.banda.data.Groupcheck
@@ -24,6 +25,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 
 class Dogregister : AppCompatActivity() {
     val DOG_GENDER_WOMAN: Int = 0;
@@ -33,6 +35,8 @@ class Dogregister : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dogregister)
         val secondintent = getIntent()
+        var dogMeetDateString = ""
+        var dogBirthdayString = ""
         val email = secondintent.getStringExtra("email")
         var dogGender = DOG_GENDER_WOMAN
         val retrofit = Retrofit.Builder().baseUrl("http://13.124.202.212:3000/")
@@ -53,11 +57,27 @@ class Dogregister : AppCompatActivity() {
                 }
             }
         }
+        dogBirthdayDate.setOnClickListener {
+            val cal = Calendar.getInstance()
+            val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                dogBirthdayString = "${year}년 ${month+1}월 ${dayOfMonth}일"
+                dogBirthdayDate.setText(dogBirthdayString)
+            }
+            DatePickerDialog(this, dateSetListener, cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH)).show()
+        }
+        dogMeetDate.setOnClickListener {
+            val cal = Calendar.getInstance()
+            val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                dogMeetDateString = "${year}년 ${month+1}월 ${dayOfMonth}일"
+                dogMeetDate.setText(dogMeetDateString)
+            }
+            DatePickerDialog(this, dateSetListener, cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH)).show()
+        }
         button2_register.setOnClickListener {
             var dogName = editTextDogName.text.toString()
             var dogBreed = editTextDogBreed.text.toString()
-            var dogBirthday = dogBirthdayDate.text.toString()
-            var dogMeetdate = dogMeetDate.text.toString()
+            var dogBirthday = dogBirthdayString
+            var dogMeetdate = dogMeetDateString
             Log.e("tag", "dogName : $dogName + dogBreed : $dogBreed + dogBirthday : $dogBirthday + dogGender : $dogGender + dogMeetday : $dogMeetdate")
 
             AlertDialog.Builder(this)
