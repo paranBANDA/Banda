@@ -25,10 +25,10 @@
             android:name=".Register.Groupexist"
             android:exported="false" />
         <activity
-            android:name=".Register.Registernickname"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Register.Registernickname"
             android:exported="false" />
         <activity
             android:name=".Register.RegisterActivity"

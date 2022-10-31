@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:gom="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/bottom1"
+        android:icon="@drawable/ic_home"
+        android:title="홈"
+        gom:showAsAction="withText"
+        />
+    <item
+        android:id="@+id/bottom2"
+        android:icon="@drawable/ic_polaroid"
+        android:title="폴라로이드"
+        gom:showAsAction="withText"/>
+    <item
+        android:title="산책 시작"
+        gom:showAsAction="never"/>
+    <item
+        android:id="@+id/bottom3"
+        android:icon="@drawable/ic_store"
+        android:title="스토어"
+        gom:showAsAction="withText"/>
+    <item
+        android:id="@+id/bottom4"
+        android:icon="@drawable/ic_mypage"
+        android:title="마이페이지"
+        gom:showAsAction="withText"/>
+</menu>
