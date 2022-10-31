@@ -7,33 +7,43 @@
     tools:context=".Register.Familyfind">
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="171dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="60dp"
-        android:text="가족 구성원의 이메일을 입력해주세요"
-        android:textSize="20sp"
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="가족 구성원의 이메일을\n입력해주세요"
+        android:textAppearance="@style/content_main"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.146"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <com.google.android.material.textfield.TextInputEditText
+
+    <EditText
         android:id="@+id/emailinput"
-        android:layout_width="338dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="200dp"
+        android:layout_width="360dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="180dp"
+        android:ems="10"
         android:hint="banda@banda.com"
+        android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_width="366dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="100dp"
+        android:background="@drawable/button_round"
+        android:stateListAnimator="@null"
         android:text="다음"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailinput" />
+        app:layout_constraintTop_toBottomOf="@+id/emailinput"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

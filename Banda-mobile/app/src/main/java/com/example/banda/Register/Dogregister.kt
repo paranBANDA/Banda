@@ -5,9 +5,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import com.example.banda.R
 import com.example.banda.RetrofitService
 import com.example.banda.data.Groupcheck
@@ -16,6 +18,7 @@ import com.example.banda.data.Register
 import com.example.banda.data.RegisterGet
 import kotlinx.android.synthetic.main.activity_dogregister.*
 import kotlinx.android.synthetic.main.activity_dogregister.view.*
+import kotlinx.android.synthetic.main.activity_register.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -111,6 +114,34 @@ class Dogregister : AppCompatActivity() {
                 .create()
                 .show()
 
+        }
+        editTextDogName.onFocusChangeListener = View.OnFocusChangeListener{ view, hasFocus ->
+            if(hasFocus){
+                editTextDogName.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.banda)
+            } else {
+                editTextDogName.backgroundTintList = ContextCompat.getColorStateList(applicationContext, android.R.color.darker_gray)
+            }
+        }
+        editTextDogBreed.onFocusChangeListener = View.OnFocusChangeListener{ view, hasFocus ->
+            if(hasFocus){
+                editTextDogBreed.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.banda)
+            } else {
+                editTextDogBreed.backgroundTintList = ContextCompat.getColorStateList(applicationContext, android.R.color.darker_gray)
+            }
+        }
+        dogBirthdayDate.onFocusChangeListener = View.OnFocusChangeListener{ view, hasFocus ->
+            if(hasFocus){
+                dogBirthdayDate.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.banda)
+            } else {
+                dogBirthdayDate.backgroundTintList = ContextCompat.getColorStateList(applicationContext, android.R.color.darker_gray)
+            }
+        }
+        dogMeetDate.onFocusChangeListener = View.OnFocusChangeListener{ view, hasFocus ->
+            if(hasFocus){
+                dogMeetDate.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.banda)
+            } else {
+                dogMeetDate.backgroundTintList = ContextCompat.getColorStateList(applicationContext, android.R.color.darker_gray)
+            }
         }
     }
 }

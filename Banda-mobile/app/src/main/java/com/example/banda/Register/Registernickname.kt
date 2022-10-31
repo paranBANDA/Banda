@@ -4,7 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.banda.MainActivity
 import com.example.banda.R
 import com.example.banda.RetrofitService
@@ -56,6 +58,13 @@ class Registernickname : AppCompatActivity() {
                 }
             })
 
+        }
+        textInputEditText.onFocusChangeListener = View.OnFocusChangeListener{ view, hasFocus ->
+            if(hasFocus){
+                textInputEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.banda)
+            } else {
+                textInputEditText.backgroundTintList = ContextCompat.getColorStateList(applicationContext, android.R.color.darker_gray)
+            }
         }
     }
 }

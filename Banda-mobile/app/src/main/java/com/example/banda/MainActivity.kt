@@ -24,32 +24,30 @@ class MainActivity : AppCompatActivity() {
     var recyclerView: RecyclerView? = null
 
     private fun initRecycler() {
-
-
         datas.apply {
             add(DogProfileData(name = "김만두", birth = "2021.12.03", img = "nothing", gender = 0, breed = "래브라도 리트리버"))
             add(DogProfileData(name = "김두부", birth = "2020.01.21", img = "nothing", gender = 1, breed = "골든 리트리버"))
-
-
-
         }
         profileAdapter = DogProfileAdapter(datas)
-
         recyclerView?.adapter = profileAdapter
         //profileAdapter.notifyDataSetChanged()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
 
         calendarView = findViewById<MaterialCalendarView>(R.id.calendarView)
-
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+
         recyclerView?.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         recyclerView?.itemAnimator = null
+
         initRecycler()
+
         Log.d("ASD", datas.toString());
+
         calendarView?.setWeekDayFormatter( ArrayWeekDayFormatter(
             arrayOf("일", "월", "화", "수", "목", "금", "토")
         )

@@ -4,7 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.banda.R
 import com.example.banda.RetrofitService
 import com.example.banda.data.FamilyId
@@ -12,6 +14,8 @@ import com.example.banda.data.Groupcheck
 import com.example.banda.data.Register
 import com.example.banda.data.RegisterGet
 import kotlinx.android.synthetic.main.activity_familyfind.*
+import kotlinx.android.synthetic.main.activity_familyfind.button_next
+import kotlinx.android.synthetic.main.activity_registernickname.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -54,6 +58,13 @@ class Familyfind : AppCompatActivity() {
                 }
             })
 
+        }
+        emailinput.onFocusChangeListener = View.OnFocusChangeListener{ view, hasFocus ->
+            if(hasFocus){
+                emailinput.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.banda)
+            } else {
+                emailinput.backgroundTintList = ContextCompat.getColorStateList(applicationContext, android.R.color.darker_gray)
+            }
         }
     }
 }
