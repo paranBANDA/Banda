@@ -6,19 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Register.RegisterActivity">
 
-    <EditText
-        android:id="@+id/editTextTextEmailAddress"
-        android:layout_width="360dp"
-        android:layout_height="57dp"
-        android:layout_marginTop="180dp"
-        android:ems="10"
-        android:hint="이메일을 입력해주세요"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -33,13 +20,27 @@
         app:layout_constraintVertical_bias="0.506" />
 
     <EditText
+        android:id="@+id/editTextTextEmailAddress"
+        android:layout_width="360dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="180dp"
+        android:ems="10"
+        android:hint="이메일"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
         android:id="@+id/editTextTextPassword"
         android:layout_width="360dp"
         android:layout_height="57dp"
         android:layout_marginTop="12dp"
         android:ems="10"
-        android:hint="비밀번호를 입력해주세요"
+        android:hint="비밀번호"
         android:inputType="textPassword"
+        android:password="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,13 +50,15 @@
         android:id="@+id/btn_next"
         android:layout_width="366dp"
         android:layout_height="54dp"
-        android:layout_marginTop="340dp"
-        android:background="@color/banda"
+        android:layout_marginBottom="100dp"
+        android:background="@drawable/button_round"
         android:text="다음"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
+        app:layout_constraintVertical_bias="1.0"
+        android:stateListAnimator="@null" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
