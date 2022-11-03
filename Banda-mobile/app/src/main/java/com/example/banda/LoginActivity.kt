@@ -16,6 +16,13 @@ import com.example.banda.Register.RegisterActivity
 
 
 class LoginActivity : AppCompatActivity() {
+    private fun saveUserEmail(email : String){
+        val pref = getSharedPreferences("pref",0)
+        val edit = pref.edit()
+        edit.putString("email",email)
+        edit.apply()
+        println("preferences success")
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -31,12 +38,12 @@ class LoginActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<LoginGet>, response: Response<LoginGet>) {
                     if (response.isSuccessful) {
                         var login = response.body()
-                        println("성공" + login?.type + login?.data + login?.token)
                         if(login?.type == "false"){
                             Toast.makeText(this@LoginActivity, "아이디와 비밀번호를 확인해 주세", Toast.LENGTH_SHORT).show()
                         }
                         else{
                             intent = Intent(this@LoginActivity,MainActivity::class.java)
+                            saveUserEmail(email)
                             startActivity((intent))
                         }
                     } else {

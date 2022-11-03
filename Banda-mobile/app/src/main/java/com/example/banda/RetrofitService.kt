@@ -2,7 +2,10 @@ package com.example.banda
 import com.example.banda.data.*
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
+
 interface RetrofitService {
     @POST("auth/login")
     fun LocalLogin(
@@ -28,4 +31,9 @@ interface RetrofitService {
     fun PetRegister(
         @Body petRegister: PetRegister
     ):Call<RegisterGet>
+
+    @POST("main/showuserpet")
+    fun ShowUserPet(
+        @Body groupcheck: Groupcheck
+    ):Call<UserPet>
 }
