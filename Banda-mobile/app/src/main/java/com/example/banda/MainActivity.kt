@@ -3,17 +3,26 @@ package com.example.banda
 import HappyDayDecorator
 import SaturdayDecorator
 import WeekendDecorator
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.android.kakaologin.DogProfileAdapter
 import com.android.kakaologin.DogProfileData
+import com.example.banda.data.*
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter
 import com.prolificinteractive.materialcalendarview.format.TitleFormatter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -22,21 +31,44 @@ class MainActivity : AppCompatActivity() {
     lateinit var profileAdapter: DogProfileAdapter
     val datas = mutableListOf<DogProfileData>()
     var recyclerView: RecyclerView? = null
-
+    var email = ""
     private fun initRecycler() {
         datas.apply {
-            add(DogProfileData(name = "김만두", birth = "2021.12.03", img = "nothing", gender = 0, breed = "래브라도 리트리버"))
+            add(DogProfileData(name = "김반", birth = "2021.12.03", img = "nothing", gender = 0, breed = "래브라도 리트리버"))
             add(DogProfileData(name = "김두부", birth = "2020.01.21", img = "nothing", gender = 1, breed = "골든 리트리버"))
         }
         profileAdapter = DogProfileAdapter(datas)
         recyclerView?.adapter = profileAdapter
         //profileAdapter.notifyDataSetChanged()
     }
+    private fun loadUserEmail(){
+        val pref = getSharedPreferences("pref",0)
+        email = pref.getString("email","").toString()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        loadUserEmail()
+
+        val retrofit = Retrofit.Builder().baseUrl("http://13.124.202.212:3000/")
+            .addConverterFactory(GsonConverterFactory.create()).build();
+        val service = retrofit.create(RetrofitService::class.java)
+        val UserRequest = Groupcheck(email = email)
+        service.ShowUserPet(UserRequest).enqueue(object : Callback<UserPet> {
+            override fun onResponse(call: Call<UserPet>, response: Response<UserPet>) {
+                if (response.isSuccessful) {
+                    println(email+response.body())
+                } else {
+                    println("실패")
+                }
+            }
+            override fun onFailure(call: Call<UserPet>, t: Throwable) {
+                // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
+                println("에러: " + t.message.toString());
+            }
+        })
 
         calendarView = findViewById<MaterialCalendarView>(R.id.calendarView)
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
