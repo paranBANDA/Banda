@@ -1,4 +1,4 @@
-package com.android.kakaologin
+package com.example.banda
 
 data class DogProfileData (
     val name : String,

@@ -6,11 +6,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.android.kakaologin.DogProfileData
+import com.bumptech.glide.Glide
+import com.example.banda.polaroid.PolaroidData
 import com.google.android.material.card.MaterialCardView
 
-class PolariodAdapter(var datas: List<DogProfileData>) : RecyclerView.Adapter<PolariodAdapter.ViewHolder>() {
+class PolariodAdapter(var datas: List<PolaroidData>) : RecyclerView.Adapter<PolariodAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.polaroid,parent,false)
         //flipArray  = MutableList<Boolean>(datas.size) { false }
@@ -24,20 +27,34 @@ class PolariodAdapter(var datas: List<DogProfileData>) : RecyclerView.Adapter<Po
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.apply {
-            bind(position)
+            bind(datas[position])
         }
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val frontAnimation = AnimatorInflater.loadAnimator(view.context, R.animator.flip_in) as AnimatorSet
         val backAnimation = AnimatorInflater.loadAnimator(view.context, R.animator.flip_out) as AnimatorSet
 
-        fun bind(position: Int) {
+        fun bind(data: PolaroidData) {
             val frontCard = itemView.findViewById<MaterialCardView>(R.id.cardView)
             val backCard = itemView.findViewById<MaterialCardView>(R.id.cardViewBack)
+            val imageViewFront = itemView.findViewById<ImageView>(R.id.imageViewFront)
+            val imageViewBack = itemView.findViewById<ImageView>(R.id.imageViewBack)
+            val textViewFront = itemView.findViewById<TextView>(R.id.textViewFront)
+            val textViewBack = itemView.findViewById<TextView>(R.id.textViewBack)
+
+
             val scale = itemView.context.resources.displayMetrics.density
             frontCard.cameraDistance = 8000 * scale
             backCard.cameraDistance = 8000 * scale
+
+            Glide.with(view).load(data.dogDiaryImageUrl).error(R.drawable.pengun).into(imageViewFront);
+            Glide.with(view).load(data.masterDiaryImageUrl).error(R.drawable.pengun).into(imageViewBack);
+
+            textViewBack.text = data.masterDiaryText
+            textViewFront.text = data.dogDiaryText
+
+
             frontCard.setOnClickListener {
                 frontAnimation.setTarget(backCard)
                 backAnimation.setTarget(frontCard)

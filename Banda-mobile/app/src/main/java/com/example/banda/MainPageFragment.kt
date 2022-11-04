@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.kakaologin.DogProfileAdapter
-import com.android.kakaologin.DogProfileData
 import com.example.banda.data.Groupcheck
 import com.example.banda.data.UserPet
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -41,8 +40,8 @@ class MainPageFragment : Fragment()  {
 
     private fun initRecycler() {
         datas.apply {
-            add(DogProfileData(name = "김반", birth = "2021.12.03", img = "nothing", gender = 0, breed = "래브라도 리트리버"))
-            add(DogProfileData(name = "김두부", birth = "2020.01.21", img = "nothing", gender = 1, breed = "골든 리트리버"))
+            add(DogProfileData(name = "김반", birth = "2021.12.03", img = "", gender = 0, breed = "래브라도 리트리버"))
+            add(DogProfileData(name = "김두부", birth = "2020.01.21", img = "http://goo.gl/gEgYUd", gender = 1, breed = "골든 리트리버"))
         }
         profileAdapter = DogProfileAdapter(datas)
         recyclerView?.adapter = profileAdapter

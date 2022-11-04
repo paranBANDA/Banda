@@ -1,6 +1,5 @@
 package com.android.kakaologin
 
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.android.kakaologin.DogProfileData
+import com.example.banda.DogProfileData
+import com.bumptech.glide.Glide
 import com.example.banda.R
 
 class DogProfileAdapter(var datas: List<DogProfileData>) : RecyclerView.Adapter<DogProfileAdapter.ViewHolder>() {
@@ -29,7 +29,7 @@ class DogProfileAdapter(var datas: List<DogProfileData>) : RecyclerView.Adapter<
         }
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
         private val dogName: TextView = view.findViewById(R.id.dog_name_textView)
         private val dogGender: TextView = view.findViewById(R.id.dog_gender_textView)
@@ -43,7 +43,13 @@ class DogProfileAdapter(var datas: List<DogProfileData>) : RecyclerView.Adapter<
             dogGender.text = if(item.gender == 0) "수컷" else "암컷"
             dogBirth.text = item.birth
             dogBreed.text = item.breed
-            dogImage.setImageResource(R.drawable.pengun)
+            if(item.img == ""){
+                dogImage.setImageResource(R.drawable.pengun)
+            } else {
+                Glide.with(view).load(item.img).into(dogImage);
+            }
+
+
         }
     }
 

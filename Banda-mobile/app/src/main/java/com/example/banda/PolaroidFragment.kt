@@ -1,3 +1,4 @@
+package com.example.banda
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,13 +9,14 @@ import android.view.WindowManager
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import com.android.kakaologin.DogProfileData
+import com.example.banda.DogProfileData
 import com.example.banda.PolariodAdapter
 import com.example.banda.R
+import com.example.banda.polaroid.PolaroidData
 
 class PolaroidFragment : Fragment() {
 
-    val datas = mutableListOf<DogProfileData>()
+    val datas = mutableListOf<PolaroidData>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,9 +31,26 @@ class PolaroidFragment : Fragment() {
 
 
         datas.apply {
-            add(DogProfileData(name = "김만두", birth = "2021.12.03", img = "nothing", gender = 0, breed = "래브라도 리트리버"))
-            add(DogProfileData(name = "김두부", birth = "2020.01.21", img = "nothing", gender = 1, breed = "골든 리트리버"))
-            add(DogProfileData(name = "김두부", birth = "2020.01.21", img = "nothing", gender = 1, breed = "골든 리트리버"))
+            add(PolaroidData(
+                dogDiaryImageUrl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2Fd9Ei8k%2FbtrQptZh9B4%2FF98lmVqbx8SihvFGCZRF5K%2Fimg.jpg",
+                dogDiaryText = "Cute Seagull..",
+                masterDiaryImageUrl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FbMMpAU%2FbtrQm9mYv3D%2FZspkO07KHvN6X6JQCUkjT0%2Fimg.png",
+                masterDiaryText = "Cute Toto..."))
+            add(PolaroidData(
+                dogDiaryImageUrl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FbSI0Di%2FbtrQo9zZDw3%2FzDIY4OjXA3cUk53kH2dCv0%2Fimg.jpg",
+                dogDiaryText = "Zoo cha geum ji...",
+                masterDiaryImageUrl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FVMMHK%2FbtrQpxHnZ4s%2FY5rZheHBkOKx29hoZtUHFk%2Fimg.png",
+                masterDiaryText = "Cute Toto..."))
+            add(PolaroidData(
+                dogDiaryImageUrl = "https://i.ibb.co/brCsKHT/img1.jpg",
+                dogDiaryText = "Cute Seagull..",
+                masterDiaryImageUrl = "",
+                masterDiaryText = "Cute Toto..."))
+            add(PolaroidData(
+                dogDiaryImageUrl = "https://t1.daumcdn.net/cfile/tistory/99C0D7335A159E890A",
+                dogDiaryText = "Cute Seagull..",
+                masterDiaryImageUrl = "http://goo.gl/gEgYUd",
+                masterDiaryText = "Cute Toto..."))
         }
         val viewPager = getView()?.findViewById<ViewPager2>(R.id.viewPager)
 
