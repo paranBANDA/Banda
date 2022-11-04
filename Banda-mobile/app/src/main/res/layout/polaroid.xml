@@ -108,7 +108,7 @@
                 android:fontFamily="cursive"
                 android:longClickable="false"
                 android:maxWidth="175dp"
-                android:text="Cute Seagull.."
+                android:text="Zoo cha geum ji.."
                 android:textColor="#252525"
                 android:textSize="16sp"
                 android:textStyle="bold|italic"
