@@ -7,7 +7,7 @@
     android:layout_alignParentLeft="true"
     android:layout_alignParentTop="true"
     android:background="@drawable/round_rec"
-    android:elevation="60dp">
+    android:layout_margin="10dp">
 
     <TextView
         android:id="@+id/dog_name_textView"
