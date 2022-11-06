@@ -1,13 +1,15 @@
 package com.example.banda
 
-import HappyDayDecorator
+import com.example.banda.decorator.HappyDayDecorator
 import SaturdayDecorator
 import WeekendDecorator
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
@@ -15,6 +17,8 @@ import com.android.kakaologin.DogProfileAdapter
 import com.example.banda.data.Groupcheck
 import com.example.banda.data.InfoPetFeel
 import com.example.banda.data.UserPet
+import com.example.banda.decorator.BadDayDecorator
+import com.example.banda.decorator.NormalDayDecorator
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter
@@ -24,6 +28,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class MainPageFragment : Fragment()  {
@@ -57,6 +63,7 @@ class MainPageFragment : Fragment()  {
                 super.onPageSelected(position)
                 service?.PetInfo(viewPager?.adapter?.getItemId(position)?.toInt()!!)?.enqueue(object : Callback<InfoPetFeel> {
 
+                    @RequiresApi(Build.VERSION_CODES.O)
                     override fun onResponse(
                         call: Call<InfoPetFeel>,
                         response: Response<InfoPetFeel>
@@ -64,7 +71,47 @@ class MainPageFragment : Fragment()  {
                         Log.d("Asd", viewPager?.adapter?.getItemId(position)?.toInt()!!.toString())
                         Log.d("GET PET FEEL", response.body()?.feel.toString())
 
-                        Log.d("GET PET FEEL", response.body()?.data.toString())
+                        Log.d("GET PET FEEL", response.body()?.date.toString())
+                        val calList = ArrayList<CalendarDay>()
+                        calendarView?.removeDecorators()
+                        var i = 0;
+                        try {
+                            for(d in response.body()?.date!!){
+                                val feel = response.body()?.feel!![i++]
+                                val date = LocalDate.parse(d, DateTimeFormatter.ISO_DATE)
+                                calendarView?.addDecorator(
+                                    when (feel) {
+                                        "Bad" -> {
+                                            BadDayDecorator(activity,
+                                                CalendarDay.from(date.year, date.month.value - 1, date.dayOfMonth))
+                                        }
+                                        "Normal" -> {
+                                            NormalDayDecorator(activity,
+                                                CalendarDay.from(date.year, date.month.value - 1, date.dayOfMonth))
+                                        }
+                                        else -> {
+                                            HappyDayDecorator(activity,
+                                                CalendarDay.from(date.year, date.month.value - 1, date.dayOfMonth))
+                                        }
+                                    }
+                                )
+                            }
+                        } catch (e : Exception) {
+
+                        }
+
+/*
+
+                        calList.add(CalendarDay.from(2022, Calendar.OCTOBER, 21))
+                        calList.add(CalendarDay.from(2022, Calendar.OCTOBER, 22))
+                        calList.add(CalendarDay.from(2022, Calendar.OCTOBER, 23))
+
+                        calendarView?.addDecorator(WeekendDecorator())
+                        calendarView?.addDecorator(SaturdayDecorator())
+
+                        for(calDay in calList)
+                            calendarView?.addDecorator(com.example.banda.decorator.HappyDayDecorator(activity, CalendarDay.from(2022, Calendar.OCTOBER, 23)))*/
+
                     }
 
                     override fun onFailure(call: Call<InfoPetFeel>, t: Throwable) {
