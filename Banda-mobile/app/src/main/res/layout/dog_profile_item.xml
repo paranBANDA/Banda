@@ -2,12 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="335dp"
-    android:layout_height="206dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_alignParentLeft="true"
     android:layout_alignParentTop="true"
-    android:background="@drawable/round_rec"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:background="@drawable/round_rec">
 
     <TextView
         android:id="@+id/dog_name_textView"

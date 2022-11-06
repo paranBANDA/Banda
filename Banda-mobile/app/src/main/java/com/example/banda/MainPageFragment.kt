@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.android.kakaologin.DogProfileAdapter
 import com.example.banda.data.Groupcheck
 import com.example.banda.data.UserPet
@@ -30,7 +31,7 @@ class MainPageFragment : Fragment()  {
     var calendarView: MaterialCalendarView? = null
     lateinit var profileAdapter: DogProfileAdapter
     val datas = mutableListOf<DogProfileData>()
-    var recyclerView: RecyclerView? = null
+    var viewPager: ViewPager2? = null
     var email = ""
 
     private fun loadUserEmail(){
@@ -39,12 +40,8 @@ class MainPageFragment : Fragment()  {
     }
 
     private fun initRecycler() {
-        datas.apply {
-            add(DogProfileData(name = "김반", birth = "2021.12.03", img = "", gender = 0, breed = "래브라도 리트리버"))
-            add(DogProfileData(name = "김두부", birth = "2020.01.21", img = "http://goo.gl/gEgYUd", gender = 1, breed = "골든 리트리버"))
-        }
         profileAdapter = DogProfileAdapter(datas)
-        recyclerView?.adapter = profileAdapter
+        viewPager?.adapter = profileAdapter
         //profileAdapter.notifyDataSetChanged()
     }
 
@@ -71,11 +68,7 @@ class MainPageFragment : Fragment()  {
             }
         })
 
-        calendarView = view.findViewById<MaterialCalendarView>(R.id.calendarView)
-        recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
-
-        recyclerView?.layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
-        recyclerView?.itemAnimator = null
+        viewPager = view.findViewById<ViewPager2>(R.id.recyclerView)
 
         initRecycler()
 
@@ -113,6 +106,10 @@ class MainPageFragment : Fragment()  {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        datas.apply {
+            add(DogProfileData(name = "김반", birth = "2021.12.03", img = "", gender = 0, breed = "래브라도 리트리버"))
+            add(DogProfileData(name = "김두부", birth = "2020.01.21", img = "http://goo.gl/gEgYUd", gender = 1, breed = "골든 리트리버"))
+        }
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main_page, container, false)
     }
