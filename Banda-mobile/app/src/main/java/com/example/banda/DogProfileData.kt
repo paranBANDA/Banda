@@ -6,4 +6,5 @@ data class DogProfileData (
     val img : String,
     val gender : Int,
     val breed : String,
+    var petId : Long,
 )

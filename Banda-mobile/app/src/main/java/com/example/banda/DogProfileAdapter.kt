@@ -29,6 +29,11 @@ class DogProfileAdapter(var datas: List<DogProfileData>) : RecyclerView.Adapter<
         }
     }
 
+    override fun getItemId(position: Int): Long {
+        return datas[position].petId
+
+    }
+
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
         private val dogName: TextView = view.findViewById(R.id.dog_name_textView)

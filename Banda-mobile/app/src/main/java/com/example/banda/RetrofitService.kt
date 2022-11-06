@@ -7,6 +7,11 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface RetrofitService {
+    @GET("info/pet")
+    fun PetInfo(
+        @Query("id") petId: Int
+    ):Call<InfoPetFeel>
+
     @POST("auth/login")
     fun LocalLogin(
         @Body login: Login
@@ -36,4 +41,6 @@ interface RetrofitService {
     fun ShowUserPet(
         @Body groupcheck: Groupcheck
     ):Call<UserPet>
+
+
 }

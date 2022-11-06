@@ -9,11 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.android.kakaologin.DogProfileAdapter
 import com.example.banda.data.Groupcheck
+import com.example.banda.data.InfoPetFeel
 import com.example.banda.data.UserPet
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
@@ -25,9 +25,9 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MainPageFragment : Fragment()  {
+    private var service: RetrofitService? = null
     var calendarView: MaterialCalendarView? = null
     lateinit var profileAdapter: DogProfileAdapter
     val datas = mutableListOf<DogProfileData>()
@@ -42,6 +42,43 @@ class MainPageFragment : Fragment()  {
     private fun initRecycler() {
         profileAdapter = DogProfileAdapter(datas)
         viewPager?.adapter = profileAdapter
+
+        viewPager?.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            }
+
+
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                service?.PetInfo(viewPager?.adapter?.getItemId(position)?.toInt()!!)?.enqueue(object : Callback<InfoPetFeel> {
+
+                    override fun onResponse(
+                        call: Call<InfoPetFeel>,
+                        response: Response<InfoPetFeel>
+                    ) {
+                        Log.d("Asd", viewPager?.adapter?.getItemId(position)?.toInt()!!.toString())
+                        Log.d("GET PET FEEL", response.body()?.feel.toString())
+
+                        Log.d("GET PET FEEL", response.body()?.data.toString())
+                    }
+
+                    override fun onFailure(call: Call<InfoPetFeel>, t: Throwable) {
+                        Log.d("GET PET FEEL fAILED", "ASD")
+                    }
+                })
+                Log.d("ASDASD", position.toString());
+
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+            }
+        })
         //profileAdapter.notifyDataSetChanged()
     }
 
@@ -52,9 +89,9 @@ class MainPageFragment : Fragment()  {
 
         val retrofit = Retrofit.Builder().baseUrl("http://13.124.202.212:3000/")
             .addConverterFactory(GsonConverterFactory.create()).build();
-        val service = retrofit.create(RetrofitService::class.java)
+        service = retrofit.create(RetrofitService::class.java)
         val UserRequest = Groupcheck(email = email)
-        service.ShowUserPet(UserRequest).enqueue(object : Callback<UserPet> {
+        service?.ShowUserPet(UserRequest)?.enqueue(object : Callback<UserPet> {
             override fun onResponse(call: Call<UserPet>, response: Response<UserPet>) {
                 if (response.isSuccessful) {
                     println(email+response.body())
@@ -69,7 +106,7 @@ class MainPageFragment : Fragment()  {
         })
 
         viewPager = view.findViewById<ViewPager2>(R.id.recyclerView)
-
+        calendarView = view.findViewById<MaterialCalendarView>(R.id.calendarView)
         initRecycler()
 
         Log.d("ASD", datas.toString());
@@ -100,6 +137,8 @@ class MainPageFragment : Fragment()  {
 
         for(calDay in calList)
             calendarView?.addDecorator(HappyDayDecorator(activity, calDay))
+
+
     }
 
     override fun onCreateView(
@@ -107,8 +146,8 @@ class MainPageFragment : Fragment()  {
         savedInstanceState: Bundle?
     ): View? {
         datas.apply {
-            add(DogProfileData(name = "김반", birth = "2021.12.03", img = "", gender = 0, breed = "래브라도 리트리버"))
-            add(DogProfileData(name = "김두부", birth = "2020.01.21", img = "http://goo.gl/gEgYUd", gender = 1, breed = "골든 리트리버"))
+            add(DogProfileData(name = "김반", birth = "2021.12.03", img = "", gender = 0, breed = "래브라도 리트리버", petId = 0))
+            add(DogProfileData(name = "김두부", birth = "2020.01.21", img = "http://goo.gl/gEgYUd", gender = 1, breed = "골든 리트리버", petId = 1))
         }
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main_page, container, false)
