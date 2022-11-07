@@ -78,7 +78,7 @@ class MainPageFragment : Fragment()  {
                         try {
                             for(d in response.body()?.date!!){
                                 val feel = response.body()?.feel!![i++]
-                                val date = LocalDate.parse(d, DateTimeFormatter.ISO_DATE)
+                                val date = LocalDate.parse(d, DateTimeFormatter.ISO_DATE_TIME)
                                 calendarView?.addDecorator(
                                     when (feel) {
                                         "Bad" -> {
@@ -195,6 +195,7 @@ class MainPageFragment : Fragment()  {
         datas.apply {
             add(DogProfileData(name = "김반", birth = "2021.12.03", img = "", gender = 0, breed = "래브라도 리트리버", petId = 0))
             add(DogProfileData(name = "김두부", birth = "2020.01.21", img = "http://goo.gl/gEgYUd", gender = 1, breed = "골든 리트리버", petId = 1))
+            add(DogProfileData(name = "김미모", birth = "2020.01.21", img = "", gender = 1, breed = "골든 리트리버", petId = 100))
         }
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main_page, container, false)
