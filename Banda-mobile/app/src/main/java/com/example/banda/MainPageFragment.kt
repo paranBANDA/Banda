@@ -141,7 +141,8 @@ class MainPageFragment : Fragment()  {
         service?.ShowUserPet(UserRequest)?.enqueue(object : Callback<UserPet> {
             override fun onResponse(call: Call<UserPet>, response: Response<UserPet>) {
                 if (response.isSuccessful) {
-                    println(email+response.body())
+                    Log.d("ASD", email)
+                    println(response.body())
                 } else {
                     println("실패")
                 }
