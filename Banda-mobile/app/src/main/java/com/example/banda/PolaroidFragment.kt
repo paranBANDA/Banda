@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.TextView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.example.banda.DogProfileData
 import com.example.banda.PolariodAdapter
 import com.example.banda.R
+import com.example.banda.polaroid.ChangeDogDialog
 import com.example.banda.polaroid.PolaroidData
 
 class PolaroidFragment : Fragment() {
@@ -53,7 +55,10 @@ class PolaroidFragment : Fragment() {
                 masterDiaryText = "Cute Toto..."))
         }
         val viewPager = getView()?.findViewById<ViewPager2>(R.id.viewPager)
-
+        val dogName = getView()?.findViewById<TextView>(R.id.polaroidDogName)
+        dogName?.setOnClickListener {
+            ChangeDogDialog(requireContext()).show()
+        }
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         viewPager?.adapter = PolariodAdapter(datas)
         viewPager?.offscreenPageLimit = 4
@@ -86,6 +91,8 @@ class PolaroidFragment : Fragment() {
                 Log.d("ViewPagerFragment", "Page ${position+1}")
             }
         })
+
+
     }
 
 }
