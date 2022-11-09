@@ -46,7 +46,7 @@ class DogProfileAdapter(var datas: List<DogProfileData>) : RecyclerView.Adapter<
             Log.d("ASD", "here")
             dogName.text = item.name
             dogGender.text = if(item.gender == 0) "수컷" else "암컷"
-            dogBirth.text = item.birth
+            dogBirth.text = item.birth.toString()
             dogBreed.text = item.breed
             if(item.img == ""){
                 dogImage.setImageResource(R.drawable.pengun)

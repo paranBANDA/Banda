@@ -16,6 +16,7 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.android.kakaologin.DogProfileAdapter
 import com.example.banda.data.Groupcheck
 import com.example.banda.data.InfoPetFeel
+import com.example.banda.data.Petinformation
 import com.example.banda.data.UserPet
 import com.example.banda.decorator.BadDayDecorator
 import com.example.banda.decorator.NormalDayDecorator
@@ -37,6 +38,7 @@ class MainPageFragment : Fragment()  {
     var calendarView: MaterialCalendarView? = null
     lateinit var profileAdapter: DogProfileAdapter
     val datas = mutableListOf<DogProfileData>()
+    val showdatas = mutableListOf<DogProfileData>()
     var viewPager: ViewPager2? = null
     var email = ""
 
@@ -70,7 +72,6 @@ class MainPageFragment : Fragment()  {
                     ) {
                         Log.d("Asd", viewPager?.adapter?.getItemId(position)?.toInt()!!.toString())
                         Log.d("GET PET FEEL", response.body()?.feel.toString())
-
                         Log.d("GET PET FEEL", response.body()?.date.toString())
                         val calList = ArrayList<CalendarDay>()
                         calendarView?.removeDecorators()
@@ -141,8 +142,16 @@ class MainPageFragment : Fragment()  {
         service?.ShowUserPet(UserRequest)?.enqueue(object : Callback<UserPet> {
             override fun onResponse(call: Call<UserPet>, response: Response<UserPet>) {
                 if (response.isSuccessful) {
-                    Log.d("ASD", email)
-                    println(response.body())
+                    val body = response.body()
+                    if (body != null) {
+                        var petData = body.data
+                        for (i in petData){
+                            datas.apply{
+                                add(DogProfileData(name = i.petname, birth = "",img = "",gender = i.gender,breed = i.breed, petId = 1))
+                                println(datas)
+                            }
+                        }
+                    }
                 } else {
                     println("실패")
                 }
@@ -152,7 +161,6 @@ class MainPageFragment : Fragment()  {
                 println("에러: " + t.message.toString());
             }
         })
-
         viewPager = view.findViewById<ViewPager2>(R.id.recyclerView)
         calendarView = view.findViewById<MaterialCalendarView>(R.id.calendarView)
         initRecycler()
@@ -189,14 +197,14 @@ class MainPageFragment : Fragment()  {
 
     }
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        datas.apply {
-            add(DogProfileData(name = "김반", birth = "2021.12.03", img = "", gender = 0, breed = "래브라도 리트리버", petId = 0))
-            add(DogProfileData(name = "김두부", birth = "2020.01.21", img = "http://goo.gl/gEgYUd", gender = 1, breed = "골든 리트리버", petId = 1))
-            add(DogProfileData(name = "김미모", birth = "2020.01.21", img = "", gender = 1, breed = "골든 리트리버", petId = 100))
+        datas.apply{
+            add(DogProfileData(name = "김미모", birth = "", img = "", gender = 1, breed = "골든 리트리버", petId = 100))
         }
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main_page, container, false)
