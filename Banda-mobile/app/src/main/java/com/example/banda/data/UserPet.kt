@@ -7,7 +7,7 @@ data class UserPet(
     @field:Json(name = "type")
     val type: String,
 
-    @field:Json(name = "user")
-    val user: List<Petinformation>
+    @field:Json(name = "data")
+    val data: List<Petinformation>
 )
 

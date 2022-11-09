@@ -39,7 +39,7 @@ class PolariodAdapter(var datas: List<PolaroidData>) : RecyclerView.Adapter<Pola
             val frontCard = itemView.findViewById<MaterialCardView>(R.id.cardView)
             val backCard = itemView.findViewById<MaterialCardView>(R.id.cardViewBack)
             val imageViewFront = itemView.findViewById<ImageView>(R.id.imageViewFront)
-            val imageViewBack = itemView.findViewById<ImageView>(R.id.imageViewBack)
+            //val imageViewBack = itemView.findViewById<ImageView>(R.id.imageViewBack)
             val textViewFront = itemView.findViewById<TextView>(R.id.textViewFront)
             val textViewBack = itemView.findViewById<TextView>(R.id.textViewBack)
 
@@ -49,7 +49,7 @@ class PolariodAdapter(var datas: List<PolaroidData>) : RecyclerView.Adapter<Pola
             backCard.cameraDistance = 8000 * scale
 
             Glide.with(view).load(data.dogDiaryImageUrl).error(R.drawable.pengun).into(imageViewFront);
-            Glide.with(view).load(data.masterDiaryImageUrl).error(R.drawable.pengun).into(imageViewBack);
+            //Glide.with(view).load(data.masterDiaryImageUrl).error(R.drawable.pengun).into(imageViewBack);
 
             textViewBack.text = data.masterDiaryText
             textViewFront.text = data.dogDiaryText
