@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
+import com.example.banda.MyPage.MyPageFragment
 import com.example.banda.store.StoreFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -12,6 +13,7 @@ class MainActivity : AppCompatActivity(){
     var storeFragment: Fragment? = null
     var mainPageFragment: Fragment? = null
     var bottomAppBar: BottomNavigationView? = null
+    var myPageFragment : MyPageFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity(){
         polaroidFragment = PolaroidFragment()
         storeFragment = StoreFragment()
         mainPageFragment = MainPageFragment()
+        myPageFragment = MyPageFragment()
         bottomAppBar = findViewById<BottomNavigationView>(R.id.bottomAppBar)
 
         bottomAppBar?.setOnItemSelectedListener { item ->
@@ -50,8 +53,15 @@ class MainActivity : AppCompatActivity(){
                 }
                 R.id.navStore -> {
                     Log.d("ASD", item.itemId.toString())
+//                    supportFragmentManager.beginTransaction().replace(R.id.frame,
+//                        storeFragment!!
+//                    ).commit()
+                    true
+                }
+                R.id.navMypage -> {
+                    Log.d("ASD", item.itemId.toString())
                     supportFragmentManager.beginTransaction().replace(R.id.frame,
-                        storeFragment!!
+                        myPageFragment!!
                     ).commit()
                     true
                 }
