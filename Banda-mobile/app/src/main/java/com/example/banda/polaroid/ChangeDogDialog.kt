@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.kakaologin.DogProfileAdapter
 import com.example.banda.DogProfileData
@@ -24,8 +23,7 @@ class ChangeDogDialog(context: Context): Dialog(context) {
         //setCancelable(false)
         val datas = mutableListOf<DogProfileData>()
         datas.apply{
-            add(DogProfileData(name = "김미모", birth = "", img = "", gender = 1, breed = "골든 리트리버", petId = 100))
-            add(DogProfileData(name = "모미", birth = "", img = "", gender = 0, breed = "리트리버", petId = 1))
+
         }
 
 

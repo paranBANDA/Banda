@@ -90,7 +90,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView4" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/dog_Dday_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="함께 한 지 1403일"

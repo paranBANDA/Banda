@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.banda.DogProfileData
 import com.bumptech.glide.Glide
 import com.example.banda.R
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DogProfileAdapter(var datas: List<DogProfileData>) : RecyclerView.Adapter<DogProfileAdapter.ViewHolder>() {
 
@@ -41,13 +43,16 @@ class DogProfileAdapter(var datas: List<DogProfileData>) : RecyclerView.Adapter<
         private val dogBirth: TextView = view.findViewById(R.id.dog_birth_textView)
         private val dogBreed: TextView = view.findViewById(R.id.dog_breed_textView)
         private val dogImage: ImageView = view.findViewById(R.id.dog_image_imageView)
-
+        private val dogDday : TextView = view.findViewById(R.id.dog_Dday_textView)
+        var today = Calendar.getInstance()
+        var format = SimpleDateFormat("yyyy-MM-dd")
         fun bind(item: DogProfileData) {
             Log.d("ASD", "here")
             dogName.text = item.name
             dogGender.text = if(item.gender == 0) "수컷" else "암컷"
             dogBirth.text = item.birth.toString()
             dogBreed.text = item.breed
+            dogDday.text = ((today.time.time - format.parse(item.meetday).time) / (60 * 60 * 24 * 1000)).toString() + "일"
             if(item.img == ""){
                 dogImage.setImageResource(R.drawable.pengun)
             } else {

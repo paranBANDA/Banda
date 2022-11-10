@@ -16,14 +16,18 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.android.kakaologin.DogProfileAdapter
 import com.example.banda.data.Groupcheck
 import com.example.banda.data.InfoPetFeel
-import com.example.banda.data.Petinformation
 import com.example.banda.data.UserPet
 import com.example.banda.decorator.BadDayDecorator
 import com.example.banda.decorator.NormalDayDecorator
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter
 import com.prolificinteractive.materialcalendarview.format.TitleFormatter
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,13 +36,15 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.collections.ArrayList
+import java.text.SimpleDateFormat
 
 class MainPageFragment : Fragment()  {
     private var service: RetrofitService? = null
     var calendarView: MaterialCalendarView? = null
     lateinit var profileAdapter: DogProfileAdapter
     val datas = mutableListOf<DogProfileData>()
-    val showdatas = mutableListOf<DogProfileData>()
+    var showdatas = mutableListOf<DogProfileData>()
     var viewPager: ViewPager2? = null
     var email = ""
 
@@ -139,28 +145,44 @@ class MainPageFragment : Fragment()  {
             .addConverterFactory(GsonConverterFactory.create()).build();
         service = retrofit.create(RetrofitService::class.java)
         val UserRequest = Groupcheck(email = email)
-        service?.ShowUserPet(UserRequest)?.enqueue(object : Callback<UserPet> {
-            override fun onResponse(call: Call<UserPet>, response: Response<UserPet>) {
-                if (response.isSuccessful) {
-                    val body = response.body()
-                    if (body != null) {
-                        var petData = body.data
-                        for (i in petData){
-                            datas.apply{
-                                add(DogProfileData(name = i.petname, birth = "",img = "",gender = i.gender,breed = i.breed, petId = 1))
-                                println(datas)
+        runBlocking {
+            launch {
+                service?.ShowUserPet(UserRequest)?.enqueue(object : Callback<UserPet> {
+                    override fun onResponse(call: Call<UserPet>, response: Response<UserPet>) {
+                        if (response.isSuccessful) {
+                            val body = response.body()
+                            if (body != null) {
+                                var petData = body.data
+                                for (i in petData) {
+                                    datas.apply {
+                                        add(
+                                            DogProfileData(
+                                                name = i.petname,
+                                                birth = SimpleDateFormat("yyyy-MM-dd").format(i.birthday),
+                                                img = "",
+                                                gender = i.gender,
+                                                breed = i.breed,
+                                                meetday = SimpleDateFormat("yyyy-MM-dd").format(i.meetday),
+                                                petId = 1
+                                            )
+                                        )
+                                        println(datas)
+                                    }
+                                }
+                            profileAdapter.notifyDataSetChanged()
                             }
+                        } else {
+                            println("실패")
                         }
                     }
-                } else {
-                    println("실패")
-                }
+
+                    override fun onFailure(call: Call<UserPet>, t: Throwable) {
+                        // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
+                        println("에러: " + t.message.toString());
+                    }
+                })
             }
-            override fun onFailure(call: Call<UserPet>, t: Throwable) {
-                // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
-                println("에러: " + t.message.toString());
-            }
-        })
+        }
         viewPager = view.findViewById<ViewPager2>(R.id.recyclerView)
         calendarView = view.findViewById<MaterialCalendarView>(R.id.calendarView)
         initRecycler()
@@ -203,9 +225,7 @@ class MainPageFragment : Fragment()  {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        datas.apply{
-            add(DogProfileData(name = "김미모", birth = "", img = "", gender = 1, breed = "골든 리트리버", petId = 100))
-        }
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main_page, container, false)
     }
