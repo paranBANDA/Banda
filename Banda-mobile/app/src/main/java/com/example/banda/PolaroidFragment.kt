@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.NumberPicker
 import android.widget.TextView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -15,6 +16,7 @@ import com.example.banda.PolariodAdapter
 import com.example.banda.R
 import com.example.banda.polaroid.ChangeDogDialog
 import com.example.banda.polaroid.PolaroidData
+import java.util.*
 
 class PolaroidFragment : Fragment() {
 
@@ -56,6 +58,24 @@ class PolaroidFragment : Fragment() {
         }
         val viewPager = getView()?.findViewById<ViewPager2>(R.id.viewPager)
         val dogName = getView()?.findViewById<TextView>(R.id.polaroidDogName)
+        val yearPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerYear)
+        val monthPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerMonth)
+        val dayPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerDay)
+
+        val cal = Calendar.getInstance();
+
+        yearPicker?.minValue = 1900
+        yearPicker?.maxValue = 2300
+        yearPicker?.value = cal.get(Calendar.YEAR)
+
+        monthPicker?.minValue = 1
+        monthPicker?.maxValue = 12
+        monthPicker?.value = cal.get(Calendar.MONTH) + 1
+
+        dayPicker?.minValue = 1
+        dayPicker?.maxValue = 31
+        dayPicker?.value = cal.get(Calendar.DAY_OF_MONTH)
+
         dogName?.setOnClickListener {
             ChangeDogDialog(requireContext()).show()
         }
