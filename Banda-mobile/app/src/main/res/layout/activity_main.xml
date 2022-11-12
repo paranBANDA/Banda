@@ -49,14 +49,16 @@
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addButton"
+        android:id="@+id/walkButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
         android:clickable="true"
         android:contentDescription="@string/hello_second_fragment"
+        android:foregroundTint="@color/banda"
         android:src="@drawable/ic_walk"
-        android:tint="@null"
+        android:tint="@color/banda"
+        app:backgroundTint="@color/banda"
         app:borderWidth="0dp"
         app:elevation="11dp"
         app:fabSize="mini"
