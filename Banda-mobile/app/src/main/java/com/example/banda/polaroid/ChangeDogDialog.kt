@@ -22,7 +22,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 
-class ChangeDogDialog(context: Context): Dialog(context) {
+class ChangeDogDialog(context: Context, val operation: (DogProfileData) -> Int): Dialog(context) {
 
     private lateinit var binding: ChangeDogDialogBinding
 
@@ -41,7 +41,7 @@ class ChangeDogDialog(context: Context): Dialog(context) {
         binding = ChangeDogDialogBinding.inflate(layoutInflater)
         // 뒤로가기 버튼, 빈 화면 터치를 통해 dialog가 사라지지 않도록
         //setCancelable(false)
-        binding.changeDogDialogRecyclerView.adapter = DogProfileAdapter(datas)
+        binding.changeDogDialogRecyclerView.adapter = DogProfileAdapter(datas, operation, this)
         val retrofit = Retrofit.Builder().baseUrl("http://13.124.202.212:3000/")
             .addConverterFactory(GsonConverterFactory.create()).build();
         service = retrofit.create(RetrofitService::class.java)
@@ -71,6 +71,7 @@ class ChangeDogDialog(context: Context): Dialog(context) {
                                     }
                                 }
                                 binding.changeDogDialogRecyclerView.adapter?.notifyDataSetChanged()
+
                             }
                         } else {
                             println("실패")

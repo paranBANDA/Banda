@@ -53,8 +53,14 @@ class MainPageFragment : Fragment()  {
         email = pref?.getString("email","").toString()
     }
 
+    val temp: (DogProfileData) -> Int = { data ->
+
+        Log.d("DOG CHANGE", data.toString());
+
+        1;
+    }
     private fun initRecycler() {
-        profileAdapter = DogProfileAdapter(datas)
+        profileAdapter = DogProfileAdapter(datas, temp, null)
         viewPager?.adapter = profileAdapter
 
         viewPager?.registerOnPageChangeCallback(object : OnPageChangeCallback() {

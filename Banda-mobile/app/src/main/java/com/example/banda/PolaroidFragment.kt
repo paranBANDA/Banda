@@ -30,6 +30,14 @@ class PolaroidFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_polaroid, container, false)
     }
 
+    val changeDog: (DogProfileData) -> Int = { data ->
+
+        
+        Log.d("DOG CHANGE", data.toString());
+
+
+        1;
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -77,7 +85,7 @@ class PolaroidFragment : Fragment() {
         dayPicker?.value = cal.get(Calendar.DAY_OF_MONTH)
 
         dogName?.setOnClickListener {
-            ChangeDogDialog(requireContext()).show()
+            ChangeDogDialog(requireContext(), changeDog).show()
         }
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         viewPager?.adapter = PolariodAdapter(datas)

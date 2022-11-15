@@ -1,5 +1,6 @@
 package com.android.kakaologin
 
+import android.app.Dialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,7 @@ import com.example.banda.R
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DogProfileAdapter(var datas: List<DogProfileData>) : RecyclerView.Adapter<DogProfileAdapter.ViewHolder>() {
+class DogProfileAdapter(var datas: List<DogProfileData>, val operation: (DogProfileData) -> Int, val dialog: Dialog?) : RecyclerView.Adapter<DogProfileAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.dog_profile_item,parent,false)
@@ -27,7 +28,7 @@ class DogProfileAdapter(var datas: List<DogProfileData>) : RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.apply {
-            bind(datas[position])
+            bind(datas[position], operation, dialog)
         }
     }
 
@@ -46,7 +47,12 @@ class DogProfileAdapter(var datas: List<DogProfileData>) : RecyclerView.Adapter<
         private val dogDday : TextView = view.findViewById(R.id.dog_Dday_textView)
         var today = Calendar.getInstance()
         var format = SimpleDateFormat("yyyy-MM-dd")
-        fun bind(item: DogProfileData) {
+
+        fun bind(item: DogProfileData, operation: (DogProfileData) -> Int, dialog: Dialog?) {
+            itemView.setOnClickListener{
+                operation(item)
+                dialog?.dismiss()
+            }
             Log.d("ASD", "here")
             dogName.text = item.name
             dogGender.text = if(item.gender == 0) "수컷" else "암컷"
