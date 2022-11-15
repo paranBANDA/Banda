@@ -60,11 +60,38 @@ class PolaroidFragment : Fragment() {
     }
 
     val changeDog: (data: DogProfileData ) -> Int = { data ->
-
-        
-        Log.d("DOG CHANGE", data.name);
+        datas.clear()
         dogName?.text = data.name
+        val Diaryrequest = FindDiary(email = email, petname = data.name)
+        service?.getDiaryByPet(Diaryrequest)?.enqueue(object : Callback<DiaryGet> {
+            override fun onResponse(call: Call<DiaryGet>, response: Response<DiaryGet>) {
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    if (body != null) {
+                        var diarydata = body.data
+                        for (i in diarydata) {
+                            datas.apply {
+                                add(
+                                    PolaroidData(
+                                        dogDiaryImageUrl = i.picture,
+                                        dogDiaryText = i.text,
+                                        masterDiaryText = i.text
+                                    )
+                                )
+                            }
+                        }
+                        polaroidAdapter?.notifyDataSetChanged()
+                    }
+                } else {
+                    println("실패")
+                }
+            }
 
+            override fun onFailure(call: Call<DiaryGet>, t: Throwable) {
+                // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
+                println("에러: " + t.message.toString());
+            }
+        })
         1;
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
