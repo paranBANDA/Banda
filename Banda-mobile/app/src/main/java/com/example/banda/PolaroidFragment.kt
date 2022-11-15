@@ -11,17 +11,42 @@ import android.widget.TextView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.android.kakaologin.DogProfileAdapter
 import com.example.banda.DogProfileData
 import com.example.banda.PolariodAdapter
 import com.example.banda.R
+import com.example.banda.data.DiaryGet
+import com.example.banda.data.FindDiary
+import com.example.banda.data.Groupcheck
+import com.example.banda.data.UserPet
 import com.example.banda.polaroid.ChangeDogDialog
 import com.example.banda.polaroid.PolaroidData
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
 import java.util.*
 
 class PolaroidFragment : Fragment() {
 
     val datas = mutableListOf<PolaroidData>()
+    var firstDogName = ""
+    var email = ""
+//    lateinit var PolariodAdapter: PolariodAdapter
 
+    private var service: RetrofitService? = null
+    private fun loadFirstDog(){
+        val pref = activity?.getSharedPreferences("pref",0)
+        firstDogName = pref?.getString("pet","").toString()
+    }
+    private fun loadUserEmail(){
+        val pref = activity?.getSharedPreferences("pref",0)
+        email = pref?.getString("email","").toString()
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,37 +58,53 @@ class PolaroidFragment : Fragment() {
     val changeDog: (DogProfileData) -> Int = { data ->
 
         
-        Log.d("DOG CHANGE", data.toString());
+        Log.d("DOG CHANGE", data.name);
 
 
         1;
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        loadFirstDog()
+        loadUserEmail()
+        val retrofit = Retrofit.Builder().baseUrl("http://13.124.202.212:3000/")
+            .addConverterFactory(GsonConverterFactory.create()).build();
+        service = retrofit.create(RetrofitService::class.java)
+        val Diaryrequest = FindDiary(email = email, petname = firstDogName)
+        runBlocking {
+            launch {
+                service?.getDiaryByPet(Diaryrequest)?.enqueue(object : Callback<DiaryGet> {
+                    override fun onResponse(call: Call<DiaryGet>, response: Response<DiaryGet>) {
+                        if (response.isSuccessful) {
+                            val body = response.body()
+                            if (body != null) {
+                                var diarydata = body.data
+                                for (i in diarydata) {
+                                    datas.apply {
+                                        add(
+                                            PolaroidData(
+                                                dogDiaryImageUrl = i.picture,
+                                                dogDiaryText = i.text,
+                                                masterDiaryText = i.text
+                                            )
+                                        )
+                                    }
+                                }
+//                                PolariodAdapter.notifyDataSetChanged()
+                            }
+                        } else {
+                            println("실패")
+                        }
+                    }
 
-
-        datas.apply {
-            add(PolaroidData(
-                dogDiaryImageUrl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2Fd9Ei8k%2FbtrQptZh9B4%2FF98lmVqbx8SihvFGCZRF5K%2Fimg.jpg",
-                dogDiaryText = "Cute Seagull..",
-                masterDiaryImageUrl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FbMMpAU%2FbtrQm9mYv3D%2FZspkO07KHvN6X6JQCUkjT0%2Fimg.png",
-                masterDiaryText = "Cute Toto..."))
-            add(PolaroidData(
-                dogDiaryImageUrl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FbSI0Di%2FbtrQo9zZDw3%2FzDIY4OjXA3cUk53kH2dCv0%2Fimg.jpg",
-                dogDiaryText = "Zoo cha geum ji...",
-                masterDiaryImageUrl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FVMMHK%2FbtrQpxHnZ4s%2FY5rZheHBkOKx29hoZtUHFk%2Fimg.png",
-                masterDiaryText = "Cute Toto..."))
-            add(PolaroidData(
-                dogDiaryImageUrl = "https://i.ibb.co/brCsKHT/img1.jpg",
-                dogDiaryText = "Cute Seagull..",
-                masterDiaryImageUrl = "",
-                masterDiaryText = "Cute Toto..."))
-            add(PolaroidData(
-                dogDiaryImageUrl = "https://t1.daumcdn.net/cfile/tistory/99C0D7335A159E890A",
-                dogDiaryText = "Cute Seagull..",
-                masterDiaryImageUrl = "http://goo.gl/gEgYUd",
-                masterDiaryText = "Cute Toto..."))
+                    override fun onFailure(call: Call<DiaryGet>, t: Throwable) {
+                        // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
+                        println("에러: " + t.message.toString());
+                    }
+                })
+            }
         }
+
         val viewPager = getView()?.findViewById<ViewPager2>(R.id.viewPager)
         val dogName = getView()?.findViewById<TextView>(R.id.polaroidDogName)
         val yearPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerYear)

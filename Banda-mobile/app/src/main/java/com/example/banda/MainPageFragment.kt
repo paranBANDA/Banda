@@ -52,6 +52,13 @@ class MainPageFragment : Fragment()  {
         val pref = activity?.getSharedPreferences("pref",0)
         email = pref?.getString("email","").toString()
     }
+    private fun saveUserDog(pet : String){
+        val pref = activity?.getSharedPreferences("pref",0)
+        val edit = pref?.edit()
+        edit?.putString("pet",pet)
+        edit?.apply()
+        println("preferences success")
+    }
 
     val temp: (DogProfileData) -> Int = { data ->
 
@@ -159,6 +166,7 @@ class MainPageFragment : Fragment()  {
                             val body = response.body()
                             if (body != null) {
                                 var petData = body.data
+                                saveUserDog(petData[0].petname)
                                 for (i in petData) {
                                     datas.apply {
                                         add(

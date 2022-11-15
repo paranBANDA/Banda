@@ -42,5 +42,10 @@ interface RetrofitService {
         @Body groupcheck: Groupcheck
     ):Call<UserPet>
 
+    @POST("polaroid/getDiarybyPet")
+    fun getDiaryByPet(
+        @Body findDiary: FindDiary
+    ):Call<DiaryGet>
+
 
 }
