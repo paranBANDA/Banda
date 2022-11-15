@@ -98,6 +98,7 @@ class PolaroidFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         loadFirstDog()
         loadUserEmail()
+        datas.clear()
         val viewPager = getView()?.findViewById<ViewPager2>(R.id.viewPager)
         dogName = getView()?.findViewById<TextView>(R.id.polaroidDogName)
         val yearPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerYear)
