@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.NumberPicker
 import android.widget.TextView
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -33,6 +34,9 @@ import java.util.*
 
 class PolaroidFragment : Fragment() {
 
+    private var dogName: TextView? = null
+    var addTextButton: Button? = null
+    private var polaroidAdapter: PolariodAdapter? = null
     val datas = mutableListOf<PolaroidData>()
     var firstDogName = ""
     var email = ""
@@ -55,11 +59,11 @@ class PolaroidFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_polaroid, container, false)
     }
 
-    val changeDog: (DogProfileData) -> Int = { data ->
+    val changeDog: (data: DogProfileData ) -> Int = { data ->
 
         
         Log.d("DOG CHANGE", data.name);
-
+        dogName?.text = data.name
 
         1;
     }
@@ -67,9 +71,24 @@ class PolaroidFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         loadFirstDog()
         loadUserEmail()
+        val viewPager = getView()?.findViewById<ViewPager2>(R.id.viewPager)
+        dogName = getView()?.findViewById<TextView>(R.id.polaroidDogName)
+        val yearPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerYear)
+        val monthPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerMonth)
+        val dayPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerDay)
+        yearPicker?.setOnValueChangedListener { numberPicker, i, i2 ->
+            Log.d("ASDASD", i.toString() + " " + i2.toString())
+        }
+        addTextButton = getView()?.findViewById<Button>(R.id.addTextButton)
+
+        addTextButton?.setOnClickListener {
+            // asdasf
+
+        }
         val retrofit = Retrofit.Builder().baseUrl("http://13.124.202.212:3000/")
             .addConverterFactory(GsonConverterFactory.create()).build();
         service = retrofit.create(RetrofitService::class.java)
+        dogName?.text = firstDogName
         val Diaryrequest = FindDiary(email = email, petname = firstDogName)
         runBlocking {
             launch {
@@ -90,7 +109,7 @@ class PolaroidFragment : Fragment() {
                                         )
                                     }
                                 }
-//                                PolariodAdapter.notifyDataSetChanged()
+                                polaroidAdapter?.notifyDataSetChanged()
                             }
                         } else {
                             println("실패")
@@ -105,11 +124,6 @@ class PolaroidFragment : Fragment() {
             }
         }
 
-        val viewPager = getView()?.findViewById<ViewPager2>(R.id.viewPager)
-        val dogName = getView()?.findViewById<TextView>(R.id.polaroidDogName)
-        val yearPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerYear)
-        val monthPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerMonth)
-        val dayPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerDay)
 
         val cal = Calendar.getInstance();
 
@@ -129,7 +143,8 @@ class PolaroidFragment : Fragment() {
             ChangeDogDialog(requireContext(), changeDog).show()
         }
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        viewPager?.adapter = PolariodAdapter(datas)
+        polaroidAdapter = PolariodAdapter(datas)
+        viewPager?.adapter = polaroidAdapter
         viewPager?.offscreenPageLimit = 4
         // item_view 간의 양 옆 여백을 상쇄할 값
         val offsetBetweenPages = resources.getDimensionPixelOffset(R.dimen.offsetBetweenPages).toFloat()

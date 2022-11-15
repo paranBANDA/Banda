@@ -74,9 +74,9 @@ class MainActivity : AppCompatActivity(){
                 R.id.navStore -> {
                     fabColorDeactivate()
                     Log.d("ASD", item.itemId.toString())
-//                    supportFragmentManager.beginTransaction().replace(R.id.frame,
-//                        storeFragment!!
-//                    ).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.frame,
+                        storeFragment!!
+                    ).commit()
                     true
                 }
                 R.id.navMypage -> {
