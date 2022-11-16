@@ -111,6 +111,8 @@ class PolaroidFragment : Fragment() {
 
         addTextButton?.setOnClickListener {
             // asdasf
+            Log.d("ADDTEXTBUTTON", "CLICK");
+
 
         }
         val retrofit = Retrofit.Builder().baseUrl("http://13.124.202.212:3000/")
