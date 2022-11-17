@@ -1,7 +1,8 @@
 package com.example.banda.polaroid
 
-data class PolaroidData (
-    val dogDiaryImageUrl : String,
-    val dogDiaryText : String,
-    val masterDiaryText : String,
+data class PolaroidData(
+    val dogDiaryImageUrl: String,
+    val dogDiaryText: String,
+    val masterDiaryText: String,
+    val Diarydate: String
 )

@@ -12,16 +12,13 @@ import android.widget.TextView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import com.android.kakaologin.DogProfileAdapter
-import com.example.banda.DogProfileData
-import com.example.banda.PolariodAdapter
-import com.example.banda.R
 import com.example.banda.data.DiaryGet
+import com.example.banda.data.DiaryTextGet
+import com.example.banda.data.DiaryTextPost
 import com.example.banda.data.FindDiary
-import com.example.banda.data.Groupcheck
-import com.example.banda.data.UserPet
 import com.example.banda.polaroid.ChangeDogDialog
 import com.example.banda.polaroid.PolaroidData
+import kotlinx.android.synthetic.main.polaroid.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import retrofit2.Call
@@ -29,7 +26,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.text.SimpleDateFormat
 import java.util.*
 
 class PolaroidFragment : Fragment() {
@@ -40,6 +36,8 @@ class PolaroidFragment : Fragment() {
     val datas = mutableListOf<PolaroidData>()
     var firstDogName = ""
     var email = ""
+    var diarytext = ""
+    var diarydate = "1999-03-04"
 //    lateinit var PolariodAdapter: PolariodAdapter
 
     private var service: RetrofitService? = null
@@ -62,6 +60,7 @@ class PolaroidFragment : Fragment() {
     val changeDog: (data: DogProfileData ) -> Int = { data ->
         datas.clear()
         dogName?.text = data.name
+        firstDogName = data.name
         val Diaryrequest = FindDiary(email = email, petname = data.name)
         service?.getDiaryByPet(Diaryrequest)?.enqueue(object : Callback<DiaryGet> {
             override fun onResponse(call: Call<DiaryGet>, response: Response<DiaryGet>) {
@@ -75,7 +74,8 @@ class PolaroidFragment : Fragment() {
                                     PolaroidData(
                                         dogDiaryImageUrl = i.picture,
                                         dogDiaryText = i.text,
-                                        masterDiaryText = i.text
+                                        masterDiaryText = i.text,
+                                        Diarydate = i.date.substring(0,10)
                                     )
                                 )
                             }
@@ -110,10 +110,27 @@ class PolaroidFragment : Fragment() {
         addTextButton = getView()?.findViewById<Button>(R.id.addTextButton)
 
         addTextButton?.setOnClickListener {
-            // asdasf
-            Log.d("ADDTEXTBUTTON", "CLICK");
+            val dtext = textViewBack.text.toString()
+            println(diarytext)
+            println(diarydate)
+            println(email)
+            println(firstDogName)
+            val Diarytextrequest = DiaryTextPost(email = email, petname = firstDogName, text = dtext, date = diarydate)
+            service?.addDiaryText(Diarytextrequest)?.enqueue(object : Callback<DiaryTextGet> {
+                override fun onResponse(call: Call<DiaryTextGet>, response: Response<DiaryTextGet>) {
+                    if (response.isSuccessful) {
+                        val body = response.body()
 
+                    } else {
+                        println("실패")
+                    }
+                }
 
+                override fun onFailure(call: Call<DiaryTextGet>, t: Throwable) {
+                    // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
+                    println("에러: " + t.message.toString());
+                }
+            })
         }
         val retrofit = Retrofit.Builder().baseUrl("http://13.124.202.212:3000/")
             .addConverterFactory(GsonConverterFactory.create()).build();
@@ -134,7 +151,8 @@ class PolaroidFragment : Fragment() {
                                             PolaroidData(
                                                 dogDiaryImageUrl = i.picture,
                                                 dogDiaryText = i.text,
-                                                masterDiaryText = i.text
+                                                masterDiaryText = i.text,
+                                                Diarydate = i.date.substring(0,10)
                                             )
                                         )
                                     }
@@ -153,21 +171,15 @@ class PolaroidFragment : Fragment() {
                 })
             }
         }
-
-
-        val cal = Calendar.getInstance();
-
         yearPicker?.minValue = 1900
         yearPicker?.maxValue = 2300
-        yearPicker?.value = cal.get(Calendar.YEAR)
+
 
         monthPicker?.minValue = 1
         monthPicker?.maxValue = 12
-        monthPicker?.value = cal.get(Calendar.MONTH) + 1
 
         dayPicker?.minValue = 1
         dayPicker?.maxValue = 31
-        dayPicker?.value = cal.get(Calendar.DAY_OF_MONTH)
 
         dogName?.setOnClickListener {
             ChangeDogDialog(requireContext(), changeDog).show()
@@ -202,7 +214,11 @@ class PolaroidFragment : Fragment() {
             // Paging 완료되면 호출
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                Log.d("ViewPagerFragment", "Page ${position+1}")
+                diarydate = datas[position].Diarydate
+                diarytext = datas[position].dogDiaryText
+                yearPicker?.value = diarydate.substring(0,4).toInt()
+                monthPicker?.value = diarydate.substring(5,7).toInt()
+                dayPicker?.value = diarydate.substring(8,10).toInt()
             }
         })
 
