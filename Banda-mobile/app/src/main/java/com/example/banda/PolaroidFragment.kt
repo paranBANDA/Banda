@@ -12,10 +12,7 @@ import android.widget.TextView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import com.example.banda.data.DiaryGet
-import com.example.banda.data.DiaryTextGet
-import com.example.banda.data.DiaryTextPost
-import com.example.banda.data.FindDiary
+import com.example.banda.data.*
 import com.example.banda.polaroid.ChangeDogDialog
 import com.example.banda.polaroid.PolaroidData
 import kotlinx.android.synthetic.main.polaroid.*
@@ -57,6 +54,23 @@ class PolaroidFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_polaroid, container, false)
+    }
+    private fun uploadimage(){
+        val imageRequest = DiaryPost(picture = "이부분 사진 url 추가필요", userId = email, petId = firstDogName,date = "오늘날짜 넣을 필요")
+        service?.uploadDiaryImage(imageRequest)?.enqueue(object : Callback<DiaryTextGet> {
+            override fun onResponse(call: Call<DiaryTextGet>, response: Response<DiaryTextGet>) {
+                if (response.isSuccessful) {
+                    //successful 했을 때의 액션
+                } else {
+                    println("실패")
+                }
+            }
+
+            override fun onFailure(call: Call<DiaryTextGet>, t: Throwable) {
+                // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
+                println("에러: " + t.message.toString());
+            }
+        })
     }
 
     val changeDog: (data: DogProfileData ) -> Int = { data ->

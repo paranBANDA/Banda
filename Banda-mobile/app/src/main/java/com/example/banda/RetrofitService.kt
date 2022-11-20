@@ -52,4 +52,9 @@ interface RetrofitService {
         @Body diaryTextPost: DiaryTextPost
     ):Call<DiaryTextGet>
 
+    @POST("polaroid/uploaddiaryimage")
+    fun uploadDiaryImage(
+        @Body diaryPost: DiaryPost
+    ):Call<DiaryTextGet>
+
 }
