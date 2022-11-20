@@ -151,7 +151,7 @@ class MainPageFragment : Fragment()  {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        datas.clear()
         loadUserEmail()
 
         val retrofit = Retrofit.Builder().baseUrl("http://13.124.202.212:3000/")

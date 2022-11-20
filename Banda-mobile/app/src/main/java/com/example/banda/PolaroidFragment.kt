@@ -15,7 +15,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.banda.data.*
 import com.example.banda.polaroid.ChangeDogDialog
 import com.example.banda.polaroid.PolaroidData
-import kotlinx.android.synthetic.main.polaroid.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import retrofit2.Call
@@ -23,7 +22,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 
 class PolaroidFragment : Fragment() {
 
@@ -120,9 +118,18 @@ class PolaroidFragment : Fragment() {
         val yearPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerYear)
         val monthPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerMonth)
         val dayPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerDay)
+        val btn_submit = getView()?.findViewById<Button>(R.id.btn_submit)
         yearPicker?.setOnValueChangedListener { numberPicker, i, i2 ->
-            Log.d("ASDASD", i.toString() + " " + i2.toString())
+            Log.d("jun", i.toString() + " " + i2.toString())
         }
+        monthPicker?.setOnValueChangedListener { picker, oldVal, newVal ->
+            Log.d("jun", oldVal.toString() + " " + newVal.toString());
+        }
+        dayPicker?.setOnValueChangedListener { picker, oldVal, newVal ->
+            Log.d("jun", oldVal.toString() + " " + newVal.toString());
+        }
+
+
         addTextButton = getView()?.findViewById<Button>(R.id.addTextButton)
 
         addTextButton?.setOnClickListener {
