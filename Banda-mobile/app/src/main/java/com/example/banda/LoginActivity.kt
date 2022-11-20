@@ -65,20 +65,6 @@ class LoginActivity : AppCompatActivity() {
 //                            service?.ShowUserPet(UserRequest)?.enqueue(object : Callback<UserPet> {
 //                                override fun onResponse(call: Call<UserPet>, response: Response<UserPet>) {
 //                                    println("login success" + response)
-//                                    if (response.isSuccessful) {
-//                                        val body = response.body()
-//                                        if (body != null) {
-//                                            var petData = body.data
-//                                            for (i in petData){
-//                                                println(i)
-//                                                datas.add(DogProfileData(name = i.petname, birth = "",img = "",gender = i.gender,breed = i.breed, petId = 1))
-//                                            }
-//                                        }
-//                                        println("dats! = " + datas)
-//                                        savePetInfo(datas)
-//                                    } else {
-//                                        println("실패")
-//                                    }
 //                                }
 //                                override fun onFailure(call: Call<UserPet>, t: Throwable) {
 //                                    // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
@@ -86,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
 //                                }
 //
 //                            })
-                            intent = Intent(this@LoginActivity,MainActivity::class.java)
+                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
                             saveUserEmail(email)
                             startActivity((intent))
                         }
