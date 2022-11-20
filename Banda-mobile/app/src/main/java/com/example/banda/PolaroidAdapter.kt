@@ -14,15 +14,19 @@ import com.example.banda.polaroid.PolaroidData
 import com.google.android.material.card.MaterialCardView
 
 class PolariodAdapter(var datas: List<PolaroidData>) : RecyclerView.Adapter<PolariodAdapter.ViewHolder>() {
+    val cardList = arrayListOf<TextView>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.polaroid,parent,false)
         //flipArray  = MutableList<Boolean>(datas.size) { false }
         Log.d("bbbb", datas.size.toString())
-        return ViewHolder(view)
+        return ViewHolder(view, cardList)
     }
 
     override fun getItemCount(): Int {
         return datas.size
+    }
+    fun getBackDiaryText(position: Int): String {
+        return cardList[position].text.toString()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -31,7 +35,7 @@ class PolariodAdapter(var datas: List<PolaroidData>) : RecyclerView.Adapter<Pola
         }
     }
 
-    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(val view: View, var list: ArrayList<TextView>) : RecyclerView.ViewHolder(view) {
         val frontAnimation = AnimatorInflater.loadAnimator(view.context, R.animator.flip_in) as AnimatorSet
         val backAnimation = AnimatorInflater.loadAnimator(view.context, R.animator.flip_out) as AnimatorSet
 
@@ -43,7 +47,7 @@ class PolariodAdapter(var datas: List<PolaroidData>) : RecyclerView.Adapter<Pola
             val textViewFront = itemView.findViewById<TextView>(R.id.textViewFront)
             val textViewBack = itemView.findViewById<TextView>(R.id.textViewBack)
             val dateview = itemView.findViewById<TextView>(R.id.dateview)
-
+            list.add(textViewBack)
             val scale = itemView.context.resources.displayMetrics.density
             frontCard.cameraDistance = 8000 * scale
             backCard.cameraDistance = 8000 * scale

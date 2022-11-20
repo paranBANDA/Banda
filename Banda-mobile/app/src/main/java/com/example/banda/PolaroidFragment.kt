@@ -37,7 +37,9 @@ class PolaroidFragment : Fragment() {
     var firstDogName = ""
     var email = ""
     var diarytext = ""
+    var dtext = ""
     var diarydate = "1999-03-04"
+    var currentPosition = 0;
 //    lateinit var PolariodAdapter: PolariodAdapter
 
     private var service: RetrofitService? = null
@@ -110,11 +112,12 @@ class PolaroidFragment : Fragment() {
         addTextButton = getView()?.findViewById<Button>(R.id.addTextButton)
 
         addTextButton?.setOnClickListener {
-            val dtext = textViewBack.text.toString()
+            dtext = polaroidAdapter?.getBackDiaryText(currentPosition) ?: ""
             println(diarytext)
             println(diarydate)
             println(email)
             println(firstDogName)
+            println(dtext)
             val Diarytextrequest = DiaryTextPost(email = email, petname = firstDogName, text = dtext, date = diarydate)
             service?.addDiaryText(Diarytextrequest)?.enqueue(object : Callback<DiaryTextGet> {
                 override fun onResponse(call: Call<DiaryTextGet>, response: Response<DiaryTextGet>) {
@@ -214,8 +217,10 @@ class PolaroidFragment : Fragment() {
             // Paging 완료되면 호출
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
+                currentPosition = position
                 diarydate = datas[position].Diarydate
                 diarytext = datas[position].dogDiaryText
+                dtext = datas[position].masterDiaryText
                 yearPicker?.value = diarydate.substring(0,4).toInt()
                 monthPicker?.value = diarydate.substring(5,7).toInt()
                 dayPicker?.value = diarydate.substring(8,10).toInt()
