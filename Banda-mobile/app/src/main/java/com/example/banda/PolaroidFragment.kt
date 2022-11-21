@@ -119,14 +119,23 @@ class PolaroidFragment : Fragment() {
         val monthPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerMonth)
         val dayPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerDay)
         val btn_submit = getView()?.findViewById<Button>(R.id.btn_submit)
-        yearPicker?.setOnValueChangedListener { numberPicker, i, i2 ->
-            Log.d("jun", i.toString() + " " + i2.toString())
+        var diarydateYear : String? = null
+        var diarydateMonth : String? = null
+        var diarydateDay : String? = null
+        var diaryDate : String?
+        yearPicker?.setOnValueChangedListener { picker, old, new ->
+            diarydateYear = new.toString()
         }
         monthPicker?.setOnValueChangedListener { picker, oldVal, newVal ->
-            Log.d("jun", oldVal.toString() + " " + newVal.toString());
+            diarydateMonth = newVal.toString()
         }
         dayPicker?.setOnValueChangedListener { picker, oldVal, newVal ->
-            Log.d("jun", oldVal.toString() + " " + newVal.toString());
+            diarydateDay = newVal.toString()
+        }
+        // btn_submit Event Listener init -> param is diaryDate.
+        btn_submit?.setOnClickListener {
+            diaryDate = "$diarydateYear-$diarydateMonth-$diarydateDay"
+            Log.d("JUN", diaryDate!!)
         }
 
 
