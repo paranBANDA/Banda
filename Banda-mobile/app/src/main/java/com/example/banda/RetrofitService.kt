@@ -57,4 +57,9 @@ interface RetrofitService {
         @Body diaryPost: DiaryPost
     ):Call<DiaryTextGet>
 
+    @POST("polaroid/getDiaryTextBydate")
+    fun getDiaryBydate(
+        @Body diarydatePost: DiarydatePost
+    ):Call<DiaryGet>
+
 }
