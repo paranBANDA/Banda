@@ -1,5 +1,6 @@
 package com.example.banda.MyPage
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.example.banda.LoginActivity
 import com.example.banda.R
 
 class MyPageFragment : Fragment(){
@@ -32,7 +34,12 @@ class MyPageFragment : Fragment(){
         loadUserEmail()
         var logout = getView()?.findViewById<Button>(R.id.btn_logout)
         logout?.setOnClickListener {
-            Log.d("ASD", "Btn_logout is clicked")
+            val intent = Intent(activity, LoginActivity::class.java)
+            val pref = requireActivity().getPreferences(0)
+            val editor = pref.edit()
+            editor.putString("email","")
+            editor.apply()
+            startActivity(intent)
         }
     }
 
