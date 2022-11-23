@@ -135,7 +135,24 @@ class PolaroidFragment : Fragment() {
         // btn_submit Event Listener init -> param is diaryDate.
         btn_submit?.setOnClickListener {
             diaryDate = "$diarydateYear-$diarydateMonth-$diarydateDay"
-            Log.d("JUN", diaryDate!!)
+            var daterequest = DiarydatePost(email = email, petname = firstDogName, date = "2022-11-07")
+            service?.getDiaryBydate(daterequest)?.enqueue(object : Callback<DiaryGet> {
+                override fun onResponse(call: Call<DiaryGet>, response: Response<DiaryGet>) {
+                    if (response.isSuccessful) {
+                        val body = response.body()
+                        if (body != null) {
+                            println(body.data)
+                        }
+                    } else {
+                        println("실패")
+                    }
+                }
+
+                override fun onFailure(call: Call<DiaryGet>, t: Throwable) {
+                    // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
+                    println("에러: " + t.message.toString());
+                }
+            })
         }
 
 
@@ -143,11 +160,6 @@ class PolaroidFragment : Fragment() {
 
         addTextButton?.setOnClickListener {
             dtext = polaroidAdapter?.getBackDiaryText(currentPosition) ?: ""
-            println(diarytext)
-            println(diarydate)
-            println(email)
-            println(firstDogName)
-            println(dtext)
             val Diarytextrequest = DiaryTextPost(email = email, petname = firstDogName, text = dtext, date = diarydate)
             service?.addDiaryText(Diarytextrequest)?.enqueue(object : Callback<DiaryTextGet> {
                 override fun onResponse(call: Call<DiaryTextGet>, response: Response<DiaryTextGet>) {
