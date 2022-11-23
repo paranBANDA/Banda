@@ -135,13 +135,27 @@ class PolaroidFragment : Fragment() {
         // btn_submit Event Listener init -> param is diaryDate.
         btn_submit?.setOnClickListener {
             diaryDate = "$diarydateYear-$diarydateMonth-$diarydateDay"
-            var daterequest = DiarydatePost(email = email, petname = firstDogName, date = "2022-11-07")
+            var daterequest = DiarydatePost(email = email, petname = firstDogName, date = diaryDate!!)
             service?.getDiaryBydate(daterequest)?.enqueue(object : Callback<DiaryGet> {
                 override fun onResponse(call: Call<DiaryGet>, response: Response<DiaryGet>) {
                     if (response.isSuccessful) {
+                        datas.clear()
                         val body = response.body()
                         if (body != null) {
-                            println(body.data)
+                            var diarydata = body.data
+                            for (i in diarydata) {
+                                datas.apply {
+                                    add(
+                                        PolaroidData(
+                                            dogDiaryImageUrl = i.picture,
+                                            dogDiaryText = i.text,
+                                            masterDiaryText = i.text,
+                                            Diarydate = i.date.substring(0,10)
+                                        )
+                                    )
+                                }
+                            }
+                            polaroidAdapter?.notifyDataSetChanged()
                         }
                     } else {
                         println("실패")
