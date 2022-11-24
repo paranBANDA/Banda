@@ -1,4 +1,5 @@
 package com.example.banda
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.NumberPicker
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
@@ -22,6 +24,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDate
 
 class PolaroidFragment : Fragment() {
 
@@ -108,6 +111,7 @@ class PolaroidFragment : Fragment() {
         })
         1;
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadFirstDog()
@@ -119,10 +123,11 @@ class PolaroidFragment : Fragment() {
         val monthPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerMonth)
         val dayPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerDay)
         val btn_submit = getView()?.findViewById<Button>(R.id.btn_submit)
-        var diarydateYear : String? = null
-        var diarydateMonth : String? = null
-        var diarydateDay : String? = null
+        var diarydateYear : String? = yearPicker?.value.toString()
+        var diarydateMonth : String? = monthPicker?.value.toString()
+        var diarydateDay : String? = dayPicker?.value.toString()
         var diaryDate : String?
+
         yearPicker?.setOnValueChangedListener { picker, old, new ->
             diarydateYear = new.toString()
         }
@@ -135,6 +140,7 @@ class PolaroidFragment : Fragment() {
         // btn_submit Event Listener init -> param is diaryDate.
         btn_submit?.setOnClickListener {
             diaryDate = "$diarydateYear-$diarydateMonth-$diarydateDay"
+            Log.d("LEVEL", diaryDate.toString())
             var daterequest = DiarydatePost(email = email, petname = firstDogName, date = diaryDate!!)
             service?.getDiaryBydate(daterequest)?.enqueue(object : Callback<DiaryGet> {
                 override fun onResponse(call: Call<DiaryGet>, response: Response<DiaryGet>) {
@@ -280,6 +286,7 @@ class PolaroidFragment : Fragment() {
                 yearPicker?.value = diarydate.substring(0,4).toInt()
                 monthPicker?.value = diarydate.substring(5,7).toInt()
                 dayPicker?.value = diarydate.substring(8,10).toInt()
+
             }
         })
 
