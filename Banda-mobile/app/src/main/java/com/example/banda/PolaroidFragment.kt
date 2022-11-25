@@ -123,9 +123,9 @@ class PolaroidFragment : Fragment() {
         val monthPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerMonth)
         val dayPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerDay)
         val btn_submit = getView()?.findViewById<Button>(R.id.btn_submit)
-        var diarydateYear : String? = yearPicker?.value.toString()
-        var diarydateMonth : String? = monthPicker?.value.toString()
-        var diarydateDay : String? = dayPicker?.value.toString()
+        var diarydateYear : String? = null
+        var diarydateMonth : String? = null
+        var diarydateDay : String? = null
         var diaryDate : String?
 
         yearPicker?.setOnValueChangedListener { picker, old, new ->
@@ -142,37 +142,37 @@ class PolaroidFragment : Fragment() {
             diaryDate = "$diarydateYear-$diarydateMonth-$diarydateDay"
             Log.d("LEVEL", diaryDate.toString())
             var daterequest = DiarydatePost(email = email, petname = firstDogName, date = diaryDate!!)
-            service?.getDiaryBydate(daterequest)?.enqueue(object : Callback<DiaryGet> {
-                override fun onResponse(call: Call<DiaryGet>, response: Response<DiaryGet>) {
-                    if (response.isSuccessful) {
-                        datas.clear()
-                        val body = response.body()
-                        if (body != null) {
-                            var diarydata = body.data
-                            for (i in diarydata) {
-                                datas.apply {
-                                    add(
-                                        PolaroidData(
-                                            dogDiaryImageUrl = i.picture,
-                                            dogDiaryText = i.text,
-                                            masterDiaryText = i.text,
-                                            Diarydate = i.date.substring(0,10)
-                                        )
-                                    )
-                                }
-                            }
-                            polaroidAdapter?.notifyDataSetChanged()
-                        }
-                    } else {
-                        println("실패")
-                    }
-                }
-
-                override fun onFailure(call: Call<DiaryGet>, t: Throwable) {
-                    // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
-                    println("에러: " + t.message.toString());
-                }
-            })
+//            service?.getDiaryBydate(daterequest)?.enqueue(object : Callback<DiaryGet> {
+//                override fun onResponse(call: Call<DiaryGet>, response: Response<DiaryGet>) {
+//                    if (response.isSuccessful) {
+//                        datas.clear()
+//                        val body = response.body()
+//                        if (body != null) {
+//                            var diarydata = body.data
+//                            for (i in diarydata) {
+//                                datas.apply {
+//                                    add(
+//                                        PolaroidData(
+//                                            dogDiaryImageUrl = i.picture,
+//                                            dogDiaryText = i.text,
+//                                            masterDiaryText = i.text,
+//                                            Diarydate = i.date.substring(0,10)
+//                                        )
+//                                    )
+//                                }
+//                            }
+//                            polaroidAdapter?.notifyDataSetChanged()
+//                        }
+//                    } else {
+//                        println("실패")
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<DiaryGet>, t: Throwable) {
+//                    // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
+//                    println("에러: " + t.message.toString());
+//                }
+//            })
         }
 
 
@@ -286,6 +286,9 @@ class PolaroidFragment : Fragment() {
                 yearPicker?.value = diarydate.substring(0,4).toInt()
                 monthPicker?.value = diarydate.substring(5,7).toInt()
                 dayPicker?.value = diarydate.substring(8,10).toInt()
+                diarydateYear = yearPicker?.value.toString()
+                diarydateMonth = monthPicker?.value.toString()
+                diarydateDay = dayPicker?.value.toString()
 
             }
         })
