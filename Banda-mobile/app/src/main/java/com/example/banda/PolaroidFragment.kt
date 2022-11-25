@@ -10,6 +10,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.NumberPicker
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -142,37 +143,44 @@ class PolaroidFragment : Fragment() {
             diaryDate = "$diarydateYear-$diarydateMonth-$diarydateDay"
             Log.d("LEVEL", diaryDate.toString())
             var daterequest = DiarydatePost(email = email, petname = firstDogName, date = diaryDate!!)
-//            service?.getDiaryBydate(daterequest)?.enqueue(object : Callback<DiaryGet> {
-//                override fun onResponse(call: Call<DiaryGet>, response: Response<DiaryGet>) {
-//                    if (response.isSuccessful) {
-//                        datas.clear()
-//                        val body = response.body()
-//                        if (body != null) {
-//                            var diarydata = body.data
-//                            for (i in diarydata) {
-//                                datas.apply {
-//                                    add(
-//                                        PolaroidData(
-//                                            dogDiaryImageUrl = i.picture,
-//                                            dogDiaryText = i.text,
-//                                            masterDiaryText = i.text,
-//                                            Diarydate = i.date.substring(0,10)
-//                                        )
-//                                    )
-//                                }
-//                            }
-//                            polaroidAdapter?.notifyDataSetChanged()
-//                        }
-//                    } else {
-//                        println("실패")
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<DiaryGet>, t: Throwable) {
-//                    // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
-//                    println("에러: " + t.message.toString());
-//                }
-//            })
+            service?.getDiaryBydate(daterequest)?.enqueue(object : Callback<DiaryGet> {
+                override fun onResponse(call: Call<DiaryGet>, response: Response<DiaryGet>) {
+                    if (response.isSuccessful) {
+                        datas.clear()
+                        val body = response.body()
+                        if (body != null) {
+                            if (body.data.isNotEmpty()) {
+                                println(body.type)
+                                var diarydata = body.data
+                                for (i in diarydata) {
+                                    datas.apply {
+                                        add(
+                                            PolaroidData(
+                                                dogDiaryImageUrl = i.picture,
+                                                dogDiaryText = i.text,
+                                                masterDiaryText = i.text,
+                                                Diarydate = i.date.substring(0, 10)
+                                            )
+                                        )
+                                    }
+                                }
+                                polaroidAdapter?.notifyDataSetChanged()
+                            }
+                            else{
+                                Toast.makeText(activity, "날짜를 확인해 주세요", Toast.LENGTH_SHORT).show()
+
+                            }
+                        }
+                    } else {
+                        println("실패")
+                    }
+                }
+
+                override fun onFailure(call: Call<DiaryGet>, t: Throwable) {
+                    // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
+                    println("에러: " + t.message.toString());
+                }
+            })
         }
 
 
