@@ -25,6 +25,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3154290771484375" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.275092936802974" />
         <entry key="app/src/main/res/layout/activity_registernickname.xml" value="0.315047679406484" />
+        <entry key="app/src/main/res/layout/change_dog_dialog.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.33605072463768115" />
         <entry key="app/src/main/res/layout/dog_profile_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.19157608695652173" />
@@ -36,6 +37,8 @@
         <entry key="app/src/main/res/layout/frame_11.xml" value="0.1752786220871327" />
         <entry key="app/src/main/res/menu/main_menu.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.19907407407407407" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2140625" />
       </map>
     </option>
   </component>
