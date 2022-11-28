@@ -9,5 +9,6 @@ data class Petinformation(
     val gender : Int,
     val meetday : Date,
     val petname : String,
-    val breed : String
+    val breed : String,
+    val image : String
 )

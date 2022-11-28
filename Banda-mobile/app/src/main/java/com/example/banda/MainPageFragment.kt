@@ -173,7 +173,7 @@ class MainPageFragment : Fragment()  {
                                             DogProfileData(
                                                 name = i.petname,
                                                 birth = SimpleDateFormat("yyyy-MM-dd").format(i.birthday),
-                                                img = "",
+                                                img = i.image,
                                                 gender = i.gender,
                                                 breed = i.breed,
                                                 meetday = SimpleDateFormat("yyyy-MM-dd").format(i.meetday),
