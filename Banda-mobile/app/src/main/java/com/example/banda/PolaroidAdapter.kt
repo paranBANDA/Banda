@@ -46,7 +46,7 @@ class PolariodAdapter(var datas: List<PolaroidData>) : RecyclerView.Adapter<Pola
             //val imageViewBack = itemView.findViewById<ImageView>(R.id.imageViewBack)
             val textViewFront = itemView.findViewById<TextView>(R.id.textViewFront)
             val textViewBack = itemView.findViewById<TextView>(R.id.textViewBack)
-            val dateview = itemView.findViewById<TextView>(R.id.dateview)
+
             list.add(textViewBack)
             val scale = itemView.context.resources.displayMetrics.density
             frontCard.cameraDistance = 8000 * scale
@@ -57,7 +57,7 @@ class PolariodAdapter(var datas: List<PolaroidData>) : RecyclerView.Adapter<Pola
 
             textViewBack.text = data.masterDiaryText
             textViewFront.text = data.dogDiaryText
-            dateview.text = data.Diarydate
+
 
             frontCard.setOnClickListener {
                 frontAnimation.setTarget(backCard)

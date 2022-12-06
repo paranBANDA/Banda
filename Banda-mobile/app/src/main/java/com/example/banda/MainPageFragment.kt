@@ -78,8 +78,6 @@ class MainPageFragment : Fragment()  {
             ) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
             }
-
-
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 service?.PetInfo(viewPager?.adapter?.getItemId(position)?.toInt()!!)?.enqueue(object : Callback<InfoPetFeel> {
@@ -92,8 +90,6 @@ class MainPageFragment : Fragment()  {
                         Log.d("Asd", viewPager?.adapter?.getItemId(position)?.toInt()!!.toString())
                         Log.d("GET PET FEEL", response.body()?.feel.toString())
                         Log.d("GET PET FEEL", response.body()?.date.toString())
-                        val calList = ArrayList<CalendarDay>()
-                        calendarView?.removeDecorators()
                         var i = 0;
                         try {
                             for(d in response.body()?.date!!){
@@ -153,7 +149,8 @@ class MainPageFragment : Fragment()  {
         super.onViewCreated(view, savedInstanceState)
         datas.clear()
         loadUserEmail()
-
+        val boldDecorator = BoldDecorator()
+        calendarView?.addDecorator(boldDecorator)
         val retrofit = Retrofit.Builder().baseUrl("http://13.124.202.212:3000/")
             .addConverterFactory(GsonConverterFactory.create()).build();
         service = retrofit.create(RetrofitService::class.java)
