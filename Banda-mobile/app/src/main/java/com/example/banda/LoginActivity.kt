@@ -3,6 +3,7 @@ package com.example.banda
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.example.banda.data.Login
 import com.example.banda.data.LoginGet
 import kotlinx.android.synthetic.main.activity_login.*
@@ -12,11 +13,13 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.banda.Register.RegisterActivity
 import com.example.banda.data.Groupcheck
 import com.example.banda.data.UserPet
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.activity_dogregister.*
 import kotlinx.coroutines.*
 import org.json.JSONArray
 
@@ -86,6 +89,20 @@ class LoginActivity : AppCompatActivity() {
                 }
             })
                 }
+            }
+        }
+        edit_id.onFocusChangeListener = View.OnFocusChangeListener{ view, hasFocus ->
+            if(hasFocus){
+                edit_id.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.banda)
+            } else {
+                edit_id.backgroundTintList = ContextCompat.getColorStateList(applicationContext, android.R.color.darker_gray)
+            }
+        }
+        edit_pw.onFocusChangeListener = View.OnFocusChangeListener{ view, hasFocus ->
+            if(hasFocus){
+                edit_pw.backgroundTintList = ContextCompat.getColorStateList(applicationContext, R.color.banda)
+            } else {
+                edit_pw.backgroundTintList = ContextCompat.getColorStateList(applicationContext, android.R.color.darker_gray)
             }
         }
         btn_register.setOnClickListener(({

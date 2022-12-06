@@ -28,7 +28,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDate
 
 class PolaroidFragment : Fragment() {
-
     private var dogName: TextView? = null
     var addTextButton: Button? = null
     private var polaroidAdapter: PolariodAdapter? = null
@@ -67,14 +66,12 @@ class PolaroidFragment : Fragment() {
                     println("실패")
                 }
             }
-
             override fun onFailure(call: Call<DiaryTextGet>, t: Throwable) {
                 // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
                 println("에러: " + t.message.toString());
             }
         })
     }
-
     val changeDog: (data: DogProfileData ) -> Int = { data ->
         datas.clear()
         dogName?.text = data.name
@@ -104,7 +101,6 @@ class PolaroidFragment : Fragment() {
                     println("실패")
                 }
             }
-
             override fun onFailure(call: Call<DiaryGet>, t: Throwable) {
                 // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
                 println("에러: " + t.message.toString());
@@ -168,14 +164,12 @@ class PolaroidFragment : Fragment() {
                             }
                             else{
                                 Toast.makeText(activity, "날짜를 확인해 주세요", Toast.LENGTH_SHORT).show()
-
                             }
                         }
                     } else {
                         println("실패")
                     }
                 }
-
                 override fun onFailure(call: Call<DiaryGet>, t: Throwable) {
                     // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
                     println("에러: " + t.message.toString());
