@@ -115,7 +115,7 @@ class PolaroidFragment : Fragment() {
         loadUserEmail()
         datas.clear()
         val viewPager = getView()?.findViewById<ViewPager2>(R.id.viewPager)
-        dogName = getView()?.findViewById<TextView>(R.id.polaroidDogName)
+        dogName = getView()?.findViewById(R.id.polaroidDogName)
         val yearPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerYear)
         val monthPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerMonth)
         val dayPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerDay)
@@ -187,12 +187,10 @@ class PolaroidFragment : Fragment() {
                 override fun onResponse(call: Call<DiaryTextGet>, response: Response<DiaryTextGet>) {
                     if (response.isSuccessful) {
                         val body = response.body()
-
                     } else {
                         println("실패")
                     }
                 }
-
                 override fun onFailure(call: Call<DiaryTextGet>, t: Throwable) {
                     // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
                     println("에러: " + t.message.toString());
@@ -230,7 +228,6 @@ class PolaroidFragment : Fragment() {
                             println("실패")
                         }
                     }
-
                     override fun onFailure(call: Call<DiaryGet>, t: Throwable) {
                         // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
                         println("에러: " + t.message.toString());
@@ -241,7 +238,6 @@ class PolaroidFragment : Fragment() {
         yearPicker?.minValue = 1900
         yearPicker?.maxValue = 2300
 
-
         monthPicker?.minValue = 1
         monthPicker?.maxValue = 12
 
@@ -249,6 +245,7 @@ class PolaroidFragment : Fragment() {
         dayPicker?.maxValue = 31
 
         dogName?.setOnClickListener {
+            Log.d("LEVEL", "Dog Name Catch!")
             ChangeDogDialog(requireContext(), changeDog).show()
         }
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);

@@ -149,8 +149,6 @@ class MainPageFragment : Fragment()  {
         super.onViewCreated(view, savedInstanceState)
         datas.clear()
         loadUserEmail()
-        val boldDecorator = BoldDecorator()
-        calendarView?.addDecorator(boldDecorator)
         val retrofit = Retrofit.Builder().baseUrl("http://13.124.202.212:3000/")
             .addConverterFactory(GsonConverterFactory.create()).build();
         service = retrofit.create(RetrofitService::class.java)
@@ -216,16 +214,18 @@ class MainPageFragment : Fragment()  {
         })
 
         val calList = ArrayList<CalendarDay>()
-        calList.add(CalendarDay.from(2022, Calendar.OCTOBER, 20))
-        calList.add(CalendarDay.from(2022, Calendar.OCTOBER, 21))
-        calList.add(CalendarDay.from(2022, Calendar.OCTOBER, 22))
-        calList.add(CalendarDay.from(2022, Calendar.OCTOBER, 23))
+        calList.add(CalendarDay.from(2022, Calendar.DECEMBER, 7))
+        calList.add(CalendarDay.from(2022, Calendar.DECEMBER, 8))
+        calList.add(CalendarDay.from(2022, Calendar.DECEMBER, 9))
+        calList.add(CalendarDay.from(2022, Calendar.DECEMBER, 10))
 
         calendarView?.addDecorator(WeekendDecorator())
         calendarView?.addDecorator(SaturdayDecorator())
-
-        for(calDay in calList)
-            calendarView?.addDecorator(HappyDayDecorator(activity, calDay))
+        calendarView?.addDecorator(BoldDecorator())
+        calendarView?.addDecorator(HappyDayDecorator(activity, calList[0]))
+        calendarView?.addDecorator(BadDayDecorator(activity, calList[1]))
+        calendarView?.addDecorator(NormalDayDecorator(activity, calList[2]))
+        calendarView?.addDecorator(HappyDayDecorator(activity, calList[3]))
 
 
     }

@@ -1,6 +1,5 @@
 import android.graphics.Color
 import android.text.style.ForegroundColorSpan
-import androidx.core.graphics.toColor
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade

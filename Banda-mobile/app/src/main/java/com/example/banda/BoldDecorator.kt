@@ -12,6 +12,6 @@ class BoldDecorator(): DayViewDecorator {
         return true
     }
     override fun decorate(view: DayViewFacade?) {
-        view?.addSpan(object: StyleSpan(Typeface.BOLD){})
+        view?.addSpan(object : StyleSpan(Typeface.BOLD){})
     }
 }
