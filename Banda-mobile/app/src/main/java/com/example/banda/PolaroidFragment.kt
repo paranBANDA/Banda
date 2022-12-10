@@ -7,10 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.NumberPicker
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -29,7 +26,7 @@ import java.time.LocalDate
 
 class PolaroidFragment : Fragment() {
     private var dogName: TextView? = null
-    var addTextButton: Button? = null
+    var addTextButton: ImageButton? = null
     private var polaroidAdapter: PolariodAdapter? = null
     val datas = mutableListOf<PolaroidData>()
     var firstDogName = ""
@@ -119,7 +116,7 @@ class PolaroidFragment : Fragment() {
         val yearPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerYear)
         val monthPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerMonth)
         val dayPicker = getView()?.findViewById<NumberPicker>(R.id.numberPickerDay)
-        val btn_submit = getView()?.findViewById<Button>(R.id.btn_submit)
+        val btn_submit = getView()?.findViewById<ImageButton>(R.id.btn_submit)
         var diarydateYear : String? = null
         var diarydateMonth : String? = null
         var diarydateDay : String? = null
@@ -178,7 +175,7 @@ class PolaroidFragment : Fragment() {
         }
 
 
-        addTextButton = getView()?.findViewById<Button>(R.id.addTextButton)
+        addTextButton = getView()?.findViewById<ImageButton>(R.id.addTextButton)
 
         addTextButton?.setOnClickListener {
             dtext = polaroidAdapter?.getBackDiaryText(currentPosition) ?: ""
